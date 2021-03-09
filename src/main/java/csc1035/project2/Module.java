@@ -1,7 +1,16 @@
+package csc1035.project2;
+
+import javax.persistence.*;
+
+@Entity
 class Module{
+    @Id
     private String moduleID;
+    @Column
     private String moduleName;
+    @Column
     private int credits;
+    @Column
     private int weeks;
 
     public Module(String moduleID, String moduleName, int credits, int weeks) {
@@ -10,6 +19,8 @@ class Module{
         this.credits = credits;
         this.weeks = weeks;
     }
+
+    public Module() {}
 
     public String getModuleID() {
         return moduleID;

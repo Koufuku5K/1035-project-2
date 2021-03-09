@@ -1,7 +1,16 @@
+package csc1035.project2;
+
+import javax.persistence.*;
+
+@Entity
 public class Room {
+    @Id
     private String roomNumber;
+    @Column
     private String roomType;
+    @Column
     private int maxCapacity;
+    @Column
     private int socialDistanceCapacity;
 
     public Room(String roomNumber, String roomType, int maxCapacity, int socialDistanceCapacity) {
@@ -10,6 +19,8 @@ public class Room {
         this.maxCapacity = maxCapacity;
         this.socialDistanceCapacity = socialDistanceCapacity;
     }
+
+    public Room() {}
 
     public String getRoomNumber() {
         return roomNumber;

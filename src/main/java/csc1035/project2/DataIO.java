@@ -1,3 +1,5 @@
+package csc1035.project2;
+
 import java.util.Scanner;
 public class DataIO {
 
