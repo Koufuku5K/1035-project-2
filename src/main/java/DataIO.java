@@ -1,4 +1,5 @@
 import csc1035.project2.Room;
+import csc1035.project2.Module;
 
 import java.util.Scanner;
 public class DataIO {
@@ -34,7 +35,7 @@ public class DataIO {
         System.out.println("Please enter the weeks the module will last for:");
         int weeks = s.nextInt();
 
-        csc1035.project2.Module m = new csc1035.project2.Module();
+        Module m = new Module();
         m.setModuleID(ID);
         m.setModuleName(name);
         m.setWeeks(weeks);
