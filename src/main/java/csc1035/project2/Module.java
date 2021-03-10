@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "Module")
-class Module{
+public class Module{
 
     @Id
     @Column(updatable = false, nullable = false)

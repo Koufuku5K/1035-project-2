@@ -40,7 +40,7 @@ public class Booking {
     @Column
     private int numPeople;
 
-    public Booking(String userID, String roomNumber, String moduleID, String startTime, int duration,
+    public Booking(User userID, Room roomNumber, Module moduleID, String startTime, int duration,
                    String date, boolean isSociallyDistant, String bookingType, int numPeople) {
         this.userID = userID;
         this.roomNumber = roomNumber;
@@ -60,27 +60,27 @@ public class Booking {
         return bookingID;
     }
 
-    public String getUserID() {
+    public User getUserID() {
         return userID;
     }
 
-    public void setUserID(String userID) {
+    public void setUserID(User userID) {
         this.userID = userID;
     }
 
-    public String getRoomNumber() {
+    public Room getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(String roomNumber) {
+    public void setRoomNumber(Room roomNumber) {
         this.roomNumber = roomNumber;
     }
 
-    public String getModuleID() {
+    public Module getModuleID() {
         return moduleID;
     }
 
-    public void setModuleID(String moduleID) {
+    public void setModuleID(Module moduleID) {
         this.moduleID = moduleID;
     }
 

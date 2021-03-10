@@ -34,7 +34,7 @@ public class DataIO {
         System.out.println("Please enter the weeks the module will last for:");
         int weeks = s.nextInt();
 
-        csc1035.project2.Module m = new csc1035.project2.Module(ID,name,weeks,credits);
+        csc1035.project2.Module m = new csc1035.project2.Module();
         m.setModuleID(ID);
         m.setModuleName(name);
         m.setWeeks(weeks);
