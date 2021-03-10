@@ -1,3 +1,5 @@
+import csc1035.project2.Room;
+
 import java.util.Scanner;
 public class DataIO {
 
@@ -13,7 +15,7 @@ public class DataIO {
         System.out.println("Please enter room socially distanced capacity:");
         int socialCapacity = s.nextInt();
 
-        Room r = new Room(room,type,socialCapacity,capacity);
+        Room r = new Room();
         r.setRoomNumber(room);
         r.setRoomType(type);
         r.setSocialDistanceCapacity(socialCapacity);
@@ -32,7 +34,7 @@ public class DataIO {
         System.out.println("Please enter the weeks the module will last for:");
         int weeks = s.nextInt();
 
-        Module m = new Module(ID,name,weeks,credits);
+        csc1035.project2.Module m = new csc1035.project2.Module(ID,name,weeks,credits);
         m.setModuleID(ID);
         m.setModuleName(name);
         m.setWeeks(weeks);

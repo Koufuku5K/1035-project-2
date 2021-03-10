@@ -1,3 +1,5 @@
+package csc1035.project2;
+
 class Module{
     private String moduleID;
     private String moduleName;
