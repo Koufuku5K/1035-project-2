@@ -1,31 +1,53 @@
+import csc1035.project2.HibernateUtil;
 import csc1035.project2.Room;
 import csc1035.project2.Module;
-
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import java.util.Scanner;
+
 public class DataIO {
+
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Scanner s = new Scanner(System.in);
 
     public void createRoom(){
 
-        Scanner s = new Scanner(System.in);
+
         System.out.println("Please enter room number:");
         String room = s.nextLine();
         System.out.println("Please enter room type:");
         String type = s.nextLine();
         System.out.println("Please enter room capacity:");
-        int capacity = s.nextInt();
+        int capacity = Integer.parseInt(s.nextLine());
         System.out.println("Please enter room socially distanced capacity:");
-        int socialCapacity = s.nextInt();
+        int socialCapacity = Integer.parseInt(s.nextLine());
 
-        Room r = new Room();
-        r.setRoomNumber(room);
-        r.setRoomType(type);
-        r.setSocialDistanceCapacity(socialCapacity);
-        r.setMaxCapacity(capacity);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Room r = new Room();
+            r.setRoomNumber(room);
+            r.setRoomType(type);
+            r.setSocialDistanceCapacity(socialCapacity);
+            r.setMaxCapacity(capacity);
+
+            session.save(r);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
     }
 
     public void createModule(){
 
-        Scanner s = new Scanner(System.in);
+
         System.out.println("Please enter the module ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the module name:");
@@ -44,7 +66,7 @@ public class DataIO {
 
     public void createStaff(){
 
-        Scanner s = new Scanner(System.in);
+
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the staff members first name:");
@@ -60,7 +82,6 @@ public class DataIO {
 
     public void createStudent(){
 
-        Scanner s = new Scanner(System.in);
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the students first name:");
