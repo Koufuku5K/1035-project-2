@@ -37,11 +37,11 @@ public class Module{
     public Module(){
     }
 
-    public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
+
     @OneToMany(mappedBy = "module")
     private List<Booking> module;
 
-    public Module(String moduleID, String moduleName, int credits, int weeks, List<Booking> module) {
+    public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
         this.moduleID = moduleID;
         this.moduleName = moduleName;
         this.credits = credits;
