@@ -4,17 +4,31 @@ import javax.persistence.*;
 @Entity(name = "Module")
 public class Module {
 
+    @Id
     private String moduleID;
+
+    @Column
     private String moduleName;
+
+    @Column
     private int credits;
+
+    @Column
     private int weeks;
 
+    @Column
     private int numLectures;
+
+    @Column
     private double lectureLength;
 
+    @Column
     private int numPracticals;
+
+    @Column
     private double practicalLength;
 
+    @Column
     private int numEnrolled;
 
     public Module(){
@@ -33,7 +47,6 @@ public class Module {
     }
 
 
-    @Id
     public String getModuleID() {
         return moduleID;
     }
