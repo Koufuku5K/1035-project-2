@@ -30,7 +30,7 @@ public class DataIO {
     }
 
     public void createStaff(){
-
+        String temp = "temp";
         Scanner s = new Scanner(System.in);
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
@@ -38,11 +38,11 @@ public class DataIO {
         String firstName = s.nextLine();
         System.out.println("Please enter the staff members second:");
         String secondName = s.nextLine();
-        Staff S = new Staff(ID,firstName,secondName);
+        Staff S = new Staff(ID,firstName,secondName,temp);
     }
 
     public void createStudent(){
-
+        String temp = "temp";
         Scanner s = new Scanner(System.in);
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
@@ -50,7 +50,7 @@ public class DataIO {
         String firstName = s.nextLine();
         System.out.println("Please enter the students second:");
         String lastName = s.nextLine();
-        Students S = new Students(ID,firstName,lastName);
+        Students S = new Students(ID,firstName,lastName,temp);
     }
 
     public static void main(String[] args) {
