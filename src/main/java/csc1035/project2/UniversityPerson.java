@@ -1,6 +1,13 @@
+package csc1035.project2;
+import javax.persistence.*;
+
+@Entity
 public class UniversityPerson {
+    @Id
     private String id;
+    @Column
     private String firstName;
+    @Column
     private String lastName;
 
     public UniversityPerson(String id, String firstName, String lastName) {

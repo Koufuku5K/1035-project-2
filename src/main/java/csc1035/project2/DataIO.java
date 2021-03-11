@@ -1,3 +1,4 @@
+package csc1035.project2;
 import csc1035.project2.HibernateUtil;
 import csc1035.project2.Room;
 import csc1035.project2.Module;
@@ -82,7 +83,7 @@ public class DataIO {
 
     public void createStaff(){
 
-
+        String temp = "temp";
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the staff members first name:");
@@ -90,12 +91,13 @@ public class DataIO {
         System.out.println("Please enter the staff members second:");
         String secondName = s.nextLine();
 
-        Staff S = new Staff(ID,firstName,secondName);
+        Staff S = new Staff(ID,firstName,secondName,temp);
 
     }
 
     public void createStudent(){
 
+        String temp = "temp";
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the students first name:");
@@ -103,7 +105,7 @@ public class DataIO {
         System.out.println("Please enter the students second:");
         String lastName = s.nextLine();
 
-        Students S = new Students(ID,firstName,lastName);
+        Students S = new Students(ID,firstName,lastName,temp);
 
     }
 
