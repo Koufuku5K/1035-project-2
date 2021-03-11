@@ -25,11 +25,28 @@ public class DataIO {
         System.out.println("Please enter the module name:");
         String name = s.nextLine();
         System.out.println("Please enter the module credits:");
+        s.nextLine();
         int credits = s.nextInt();
         System.out.println("Please enter the weeks the module will last for:");
+        s.nextLine();
         int weeks = s.nextInt();
+        System.out.println("Please enter the number of lectures per week:");
+        s.nextLine();
+        int numLectures = s.nextInt();
+        System.out.println("Please enter the length of lectures:");
+        s.nextLine();
+        double lectureLength = s.nextDouble();
+        System.out.println("Please enter the number of practicals per week:");
+        s.nextLine();
+        int numPracticals = s.nextInt();
+        System.out.println("Please enter the length of practicals:");
+        s.nextLine();
+        double practicalLength = s.nextDouble();
+        System.out.println("Please enter the number of students enrolled on this module");
+        s.nextLine();
+        int numEnrolled = s.nextInt();
 
-        Module m = new Module(ID,name,weeks,credits);
+        Module m = new Module(ID,name,weeks,credits,numLectures,lectureLength,numPracticals,practicalLength,numEnrolled);
 
     }
 
