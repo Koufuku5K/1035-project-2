@@ -22,7 +22,7 @@ public class DataIO {
         System.out.println("Please enter room socially distanced capacity:");
         int socialCapacity = Integer.parseInt(s.nextLine());
 
-        Room r = new Room(room,type,socialCapacity,capacity);
+        Room r = new Room();
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();
