@@ -1,6 +1,14 @@
+package csc1035.project2;
+
+import javax.persistence.*;
+
+@Entity
 public class Students {
+    @Id
     private String studentID;
+    @Column
     private String studentFirstName;
+    @Column
     private String studentLastName;
 
     public Students(String studentID, String studentFirstName, String studentLastName) {
@@ -8,6 +16,8 @@ public class Students {
         this.studentFirstName = studentFirstName;
         this.studentLastName = studentLastName;
     }
+
+    public Students() {}
 
     public String getStudentID() {
         return studentID;

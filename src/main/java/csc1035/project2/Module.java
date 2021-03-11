@@ -1,10 +1,13 @@
-import javax.persistence.*;
+package csc1035.project2;
 
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "Module")
-public class Module {
+public class Module{
 
     @Id
+    @Column(updatable = false, nullable = false)
     private String moduleID;
 
     @Column
@@ -35,6 +38,10 @@ public class Module {
     }
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
+    @OneToMany(mappedBy = "module")
+    private List<Booking> module;
+
+    public Module(String moduleID, String moduleName, int credits, int weeks, List<Booking> module) {
         this.moduleID = moduleID;
         this.moduleName = moduleName;
         this.credits = credits;
