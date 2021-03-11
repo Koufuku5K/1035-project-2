@@ -4,11 +4,25 @@ class Module{
     private int credits;
     private int weeks;
 
-    public Module(String moduleID, String moduleName, int credits, int weeks) {
+    private int numLectures;
+    private double lectureLength;
+
+    private int numPracticals;
+    private double practicalLength;
+
+    private int numEnrolled;
+
+
+    public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
         this.moduleID = moduleID;
         this.moduleName = moduleName;
         this.credits = credits;
         this.weeks = weeks;
+        this.numLectures = numLectures;
+        this.lectureLength = lectureLength;
+        this.numPracticals = numPracticals;
+        this.practicalLength = practicalLength;
+        this.numEnrolled = numEnrolled;
     }
 
     public String getModuleID() {
@@ -38,8 +52,3 @@ class Module{
     public int getWeeks() {
         return weeks;
     }
-
-    public void setWeeks(int weeks) {
-        this.weeks = weeks;
-    }
-}
