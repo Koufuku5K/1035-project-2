@@ -17,7 +17,8 @@ public class Module {
 
     private int numEnrolled;
 
-
+    public Module(){
+    }
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
         this.moduleID = moduleID;
@@ -30,7 +31,6 @@ public class Module {
         this.practicalLength = practicalLength;
         this.numEnrolled = numEnrolled;
     }
-
 
 
     @Id
@@ -105,9 +105,4 @@ public class Module {
     public void setNumEnrolled(int numEnrolled) {
         this.numEnrolled = numEnrolled;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }
