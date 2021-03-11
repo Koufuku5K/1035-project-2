@@ -14,10 +14,7 @@ public class DataIO {
         int socialCapacity = s.nextInt();
 
         Room r = new Room(room,type,socialCapacity,capacity);
-        r.setRoomNumber(room);
-        r.setRoomType(type);
-        r.setSocialDistanceCapacity(socialCapacity);
-        r.setMaxCapacity(capacity);
+
     }
 
     public void createModule(){
@@ -33,10 +30,7 @@ public class DataIO {
         int weeks = s.nextInt();
 
         Module m = new Module(ID,name,weeks,credits);
-        m.setModuleID(ID);
-        m.setModuleName(name);
-        m.setWeeks(weeks);
-        m.setCredits(credits);
+
     }
 
     public void createStaff(){
@@ -50,9 +44,7 @@ public class DataIO {
         String secondName = s.nextLine();
 
         Staff S = new Staff(ID,firstName,secondName);
-        S.setStaffID(ID);
-        S.setStaffFirstName(firstName);
-        S.setStaffSecondName(secondName);
+
     }
 
     public void createStudent(){
@@ -66,9 +58,7 @@ public class DataIO {
         String lastName = s.nextLine();
 
         Students S = new Students(ID,firstName,lastName);
-        S.setStudentID(ID);
-        S.setStudentFirstName(firstName);
-        S.setStudentLastName(lastName);
+
     }
 
     public static void main(String[] args) {
