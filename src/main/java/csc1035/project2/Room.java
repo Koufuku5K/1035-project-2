@@ -1,26 +1,37 @@
 package csc1035.project2;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "Room")
 public class Room {
+
     @Id
+    @Column(updatable = false, nullable = false)
     private String roomNumber;
+
     @Column
     private String roomType;
+
     @Column
     private int maxCapacity;
+
     @Column
     private int socialDistanceCapacity;
 
-    public Room(String roomNumber, String roomType, int maxCapacity, int socialDistanceCapacity) {
+    @OneToMany(mappedBy = "room")
+    private List<Booking> room;
+
+    public Room(String roomNumber, String roomType, int maxCapacity, int socialDistanceCapacity, List<Booking> room) {
         this.roomNumber = roomNumber;
         this.roomType = roomType;
         this.maxCapacity = maxCapacity;
         this.socialDistanceCapacity = socialDistanceCapacity;
+        this.room = room;
     }
 
-    public Room() {}
+    public Room(){
+    }
 
     public String getRoomNumber() {
         return roomNumber;
@@ -52,5 +63,13 @@ public class Room {
 
     public void setSocialDistanceCapacity(int socialDistanceCapacity) {
         this.socialDistanceCapacity = socialDistanceCapacity;
+    }
+
+    public List<Booking> getRoom() {
+        return room;
+    }
+
+    public void setRoom(List<Booking> room) {
+        this.room = room;
     }
 }
