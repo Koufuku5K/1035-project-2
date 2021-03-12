@@ -10,4 +10,12 @@ public class Staff extends UniversityPerson {
         super(id, firstName, lastName);
         this.teaching = teaching;
     }
+
+    public String getTeaching() {
+        return teaching;
+    }
+
+    public void setTeaching(String teaching) {
+        this.teaching = teaching;
+    }
 }

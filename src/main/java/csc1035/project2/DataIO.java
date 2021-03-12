@@ -23,8 +23,6 @@ public class DataIO {
         System.out.println("Please enter room socially distanced capacity:");
         int socialCapacity = Integer.parseInt(s.nextLine());
 
-        Room r = new Room(room,type,socialCapacity,capacity);
-
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
@@ -89,10 +87,30 @@ public class DataIO {
         System.out.println("Please enter the staff members first name:");
         String firstName = s.nextLine();
         System.out.println("Please enter the staff members second:");
-        String secondName = s.nextLine();
+        String lastName = s.nextLine();
 
-        Staff S = new Staff(ID,firstName,secondName,temp);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
 
+            Staff S = new Staff();
+            S.setId(ID);
+            S.setFirstName(firstName);
+            S.setLastName(lastName);
+            S.setTeaching("temp");
+
+            session.save(S);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
     }
 
     public void createStudent(){
@@ -105,8 +123,29 @@ public class DataIO {
         System.out.println("Please enter the students second:");
         String lastName = s.nextLine();
 
-        Students S = new Students(ID,firstName,lastName,temp);
 
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Students S = new Students();
+            S.setId(ID);
+            S.setFirstName(firstName);
+            S.setLastName(lastName);
+            S.setAttending("temp");
+
+            session.save(S);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
     }
 
     public static void main(String[] args) {
