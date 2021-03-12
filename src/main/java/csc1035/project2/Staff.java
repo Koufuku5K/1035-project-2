@@ -1,45 +1,21 @@
 package csc1035.project2;
-
 import javax.persistence.*;
 
 @Entity
-public class Staff {
-    @Id
-    private String staffID;
+public class Staff extends UniversityPerson {
     @Column
-    private String staffFirstName;
-    @Column
-    private String staffSecondName;
+    private String teaching;
 
-    public Staff(String staffID, String staffFirstName, String staffSecondName) {
-        this.staffID = staffID;
-        this.staffFirstName = staffFirstName;
-        this.staffSecondName = staffSecondName;
+    public Staff(String id, String firstName, String lastName, String teaching) {
+        super(id, firstName, lastName);
+        this.teaching = teaching;
     }
 
-    public Staff() {}
-
-    public String getStaffID() {
-        return staffID;
+    public String getTeaching() {
+        return teaching;
     }
 
-    public void setStaffID(String staffID) {
-        this.staffID = staffID;
-    }
-
-    public String getStaffFirstName() {
-        return staffFirstName;
-    }
-
-    public void setStaffFirstName(String staffFirstName) {
-        this.staffFirstName = staffFirstName;
-    }
-
-    public String getStaffSecondName() {
-        return staffSecondName;
-    }
-
-    public void setStaffSecondName(String staffSecondName) {
-        this.staffSecondName = staffSecondName;
+    public void setTeaching(String teaching) {
+        this.teaching = teaching;
     }
 }
