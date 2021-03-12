@@ -10,4 +10,12 @@ public class Students extends UniversityPerson {
         super(id, firstName, lastName);
         this.attending = attending;
     }
+
+    public String getAttending() {
+        return attending;
+    }
+
+    public void setAttending(String attending) {
+        this.attending = attending;
+    }
 }
