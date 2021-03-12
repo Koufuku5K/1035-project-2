@@ -1,7 +1,9 @@
 package csc1035.project2;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "Module")
 public class Module{
@@ -36,6 +38,12 @@ public class Module{
 
     @OneToMany(mappedBy = "module")
     private List<Booking> module;
+
+    @ManyToMany(mappedBy = "modules")
+    private Set<Staff> staff = new HashSet<>();
+
+    @ManyToMany(mappedBy = "students")
+    private Set<Student> students = new HashSet<>();
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
                   int numPracticals, double practicalLength, int numEnrolled, List<Booking> module) {
@@ -131,5 +139,21 @@ public class Module{
 
     public void setModule(List<Booking> module) {
         this.module = module;
+    }
+
+    public Set<Staff> getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Set<Staff> staff) {
+        this.staff = staff;
+    }
+
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 }
