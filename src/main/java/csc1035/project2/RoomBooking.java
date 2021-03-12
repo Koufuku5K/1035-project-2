@@ -18,11 +18,12 @@ public class RoomBooking {
         session.beginTransaction();
 
         Query roomList = session.createQuery("from Room");
-        List rooms = roomList.list();
+        List<Room> rooms = (List<Room>) roomList.list();
         session.getTransaction().commit();
         session.close();
 
-        System.out.println(rooms);
+        for (Room r : rooms)
+            System.out.println(r.getRoomNumber());
     }
 
 }
