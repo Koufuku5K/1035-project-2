@@ -97,7 +97,7 @@ public class DataIO {
             S.setId(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setTeaching("temp");
+            S.setTeaching(temp);
 
             session.save(S);
             session.getTransaction().commit();
@@ -132,7 +132,7 @@ public class DataIO {
             S.setId(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setAttending("temp");
+            S.setAttending(temp);
 
             session.save(S);
             session.getTransaction().commit();
