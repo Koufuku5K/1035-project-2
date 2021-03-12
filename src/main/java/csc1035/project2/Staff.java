@@ -1,21 +1,14 @@
 package csc1035.project2;
 import javax.persistence.*;
 
-@Entity
-public class Staff extends UniversityPerson {
-    @Column
-    private String teaching;
+@Entity(name = "Staff")
+public class Staff extends User {
 
-    public Staff(String id, String firstName, String lastName, String teaching) {
-        super(id, firstName, lastName);
-        this.teaching = teaching;
+    public Staff(String userID, String firstName, String lastName) {
+        super(userID, firstName, lastName);
     }
 
-    public String getTeaching() {
-        return teaching;
-    }
-
-    public void setTeaching(String teaching) {
-        this.teaching = teaching;
+    public Staff() {
+        super();
     }
 }

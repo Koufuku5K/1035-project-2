@@ -97,7 +97,6 @@ public class DataIO {
             S.setId(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setTeaching("temp");
 
             session.save(S);
             session.getTransaction().commit();
@@ -128,11 +127,10 @@ public class DataIO {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
-            Students S = new Students();
+            Student S = new Student();
             S.setId(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setAttending("temp");
 
             session.save(S);
             session.getTransaction().commit();

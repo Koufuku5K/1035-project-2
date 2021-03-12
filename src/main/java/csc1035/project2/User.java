@@ -1,27 +1,35 @@
 package csc1035.project2;
 import javax.persistence.*;
 
-@Entity
-public class UniversityPerson {
+@Entity(name = "User")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User {
+
     @Id
-    private String id;
+    @Column
+    private String userID;
+
     @Column
     private String firstName;
+
     @Column
     private String lastName;
 
-    public UniversityPerson(String id, String firstName, String lastName) {
-        this.id = id;
+    public User(String id, String firstName, String lastName) {
+        this.userID = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    public User() {
+    }
+
     public String getId() {
-        return id;
+        return userID;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.userID = id;
     }
 
     public String getFirstName() {

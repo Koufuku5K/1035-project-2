@@ -6,8 +6,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://cs-db.ncl.ac.uk/DATABASE_NAME</property>
-        <property name="hibernate.connection.username">USERNAME</property>
+        <property name="hibernate.connection.url">jdbc:mysql://cs-db.ncl.ac.uk:3306/t1035t09</property>
+        <property name="hibernate.connection.username">t1035t09</property>
         <property name="hibernate.connection.password">PASSWORD</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="show_sql">true</property>
@@ -17,5 +17,9 @@
         <mapping class="csc1035.project2.Booking" /> <!--- Add a new mapping class for a new table in the database -->
         <mapping class="csc1035.project2.Module" />
         <mapping class="csc1035.project2.Room" />
+        <mapping class="csc1035.project2.User" />
+        <mapping class="csc1035.project2.Staff" />
+        <mapping class="csc1035.project2.Student" />
+
     </session-factory>
 </hibernate-configuration>
