@@ -10,7 +10,7 @@ public class Students extends UniversityPerson {
         super(id, firstName, lastName);
         this.attending = attending;
     }
-
+    public Students(){}
     public String getAttending() {
         return attending;
     }

@@ -15,6 +15,7 @@ public class UniversityPerson {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    public UniversityPerson(){}
 
     public String getId() {
         return id;

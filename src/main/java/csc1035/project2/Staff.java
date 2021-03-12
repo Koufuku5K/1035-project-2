@@ -10,6 +10,7 @@ public class Staff extends UniversityPerson {
         super(id, firstName, lastName);
         this.teaching = teaching;
     }
+    public Staff(){}
 
     public String getTeaching() {
         return teaching;
