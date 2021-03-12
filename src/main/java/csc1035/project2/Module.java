@@ -34,14 +34,11 @@ public class Module{
     @Column
     private int numEnrolled;
 
-    public Module(){
-    }
-
-
     @OneToMany(mappedBy = "module")
     private List<Booking> module;
 
-    public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength, int numPracticals, double practicalLength, int numEnrolled) {
+    public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
+                  int numPracticals, double practicalLength, int numEnrolled, List<Booking> module) {
         this.moduleID = moduleID;
         this.moduleName = moduleName;
         this.credits = credits;
@@ -53,6 +50,8 @@ public class Module{
         this.numEnrolled = numEnrolled;
     }
 
+    public Module(){
+    }
 
     public String getModuleID() {
         return moduleID;
@@ -124,5 +123,13 @@ public class Module{
 
     public void setNumEnrolled(int numEnrolled) {
         this.numEnrolled = numEnrolled;
+    }
+
+    public List<Booking> getModule() {
+        return module;
+    }
+
+    public void setModule(List<Booking> module) {
+        this.module = module;
     }
 }

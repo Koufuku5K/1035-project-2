@@ -1,5 +1,6 @@
 package csc1035.project2;
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "User")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -15,7 +16,10 @@ public class User {
     @Column
     private String lastName;
 
-    public User(String id, String firstName, String lastName) {
+    @OneToMany(mappedBy = "user")
+    private List<Booking> user;
+
+    public User(String id, String firstName, String lastName, List<Booking> user) {
         this.userID = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,12 +28,12 @@ public class User {
     public User() {
     }
 
-    public String getId() {
+    public String getuserID() {
         return userID;
     }
 
-    public void setId(String id) {
-        this.userID = id;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getFirstName() {
@@ -46,5 +50,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Booking> getUser() {
+        return user;
+    }
+
+    public void setUser(List<Booking> user) {
+        this.user = user;
     }
 }

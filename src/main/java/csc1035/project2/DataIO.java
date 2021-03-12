@@ -75,7 +75,7 @@ public class DataIO {
         s.nextLine();
         int numEnrolled = s.nextInt();
 
-        Module m = new Module(ID,name,weeks,credits,numLectures,lectureLength,numPracticals,practicalLength,numEnrolled);
+        Module m = new Module();
 
     }
 
@@ -94,7 +94,7 @@ public class DataIO {
             session.beginTransaction();
 
             Staff S = new Staff();
-            S.setId(ID);
+            S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
 
@@ -128,7 +128,7 @@ public class DataIO {
             session.beginTransaction();
 
             Student S = new Student();
-            S.setId(ID);
+            S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
 
