@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class DataIO {
 
-    private Scanner s = new Scanner(System.in);
-    private Session session = HibernateUtil.getSessionFactory().openSession();
+    Session session = HibernateUtil.getSessionFactory().openSession();
+    Scanner s = new Scanner(System.in);
 
     public void createRoom(){
 
@@ -75,7 +75,7 @@ public class DataIO {
         s.nextLine();
         int numEnrolled = s.nextInt();
 
-        Module m = new Module();
+        Module m = new Module(ID,name,weeks,credits,numLectures,lectureLength,numPracticals,practicalLength,numEnrolled);
 
     }
 
@@ -96,6 +96,7 @@ public class DataIO {
             S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
+            S.setTeaching(temp);
 
             session.save(S);
             session.getTransaction().commit();
@@ -113,6 +114,7 @@ public class DataIO {
 
     public void createStudent(){
 
+        String temp = "temp";
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the students first name:");
@@ -129,6 +131,7 @@ public class DataIO {
             S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
+            S.setAttending("temp");
 
             session.save(S);
             session.getTransaction().commit();
