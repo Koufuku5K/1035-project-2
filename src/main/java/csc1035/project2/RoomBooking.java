@@ -10,6 +10,7 @@ public class RoomBooking {
 
     public static void main(String[] args) {
         roomList();
+        confirmation();
     }
 
     public static void roomList() {
@@ -24,6 +25,25 @@ public class RoomBooking {
 
         for (Room r : rooms)
             System.out.println(r.getRoomNumber());
+    }
+
+    public static void confirmation() {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R where B.roomNumber = R.roomNumber";
+        Query confirmation = session.createQuery(hql);
+        List<Booking> booking = (List<Booking>)confirmation.list();
+        session.getTransaction().commit();
+        session.close();
+
+        for (Booking b : booking) {
+            System.out.println("Your Booking Confirmation:\n" + "Booking ID: " + b.getBookingID());
+            System.out.println("Booking details:\n" + "User ID: " + b.getUserID());
+            System.out.println("Room Number: " + b.getRoomNumber());
+            System.out.println("Date: " + b.getDate());
+        }
     }
 
 }
