@@ -11,15 +11,15 @@ public class Booking {
     private int bookingID;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "userID")
     private User userID;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "roomNumber")
     private Room roomNumber;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "moduleID")
     private Module moduleID;
 
     @Column

@@ -42,7 +42,7 @@ public class Module{
     @ManyToMany(mappedBy = "modules")
     private Set<Staff> staff = new HashSet<>();
 
-    @ManyToMany(mappedBy = "students")
+    @ManyToMany(mappedBy = "modules")
     private Set<Student> students = new HashSet<>();
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
