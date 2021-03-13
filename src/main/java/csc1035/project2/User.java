@@ -16,7 +16,7 @@ public class User {
     @Column
     private String lastName;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userID")
     private List<Booking> user;
 
     public User(String id, String firstName, String lastName, List<Booking> user) {

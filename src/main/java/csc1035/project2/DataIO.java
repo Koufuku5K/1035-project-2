@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 public class DataIO {
 
-    Session session = HibernateUtil.getSessionFactory().openSession();
-    Scanner s = new Scanner(System.in);
+    private static Scanner s = new Scanner(System.in);
+    private static Session session = HibernateUtil.getSessionFactory().openSession();
 
-    public void createRoom(){
+    public static void createRoom(){
 
 
         System.out.println("Please enter room number:");
@@ -147,5 +147,6 @@ public class DataIO {
     }
 
     public static void main(String[] args) {
+        createRoom();
     }
 }

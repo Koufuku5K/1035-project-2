@@ -19,7 +19,7 @@ public class Room {
     @Column
     private int socialDistanceCapacity;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "roomNumber")
     private List<Booking> room;
 
     public Room(String roomNumber, String roomType, int maxCapacity, int socialDistanceCapacity, List<Booking> room) {

@@ -30,7 +30,7 @@ public class RoomBooking {
                                "-------------------------------");
             System.out.println("Enter option (0-5):");
             String option = s.nextLine();
-
+/*
             switch (option) {
                 case "0" -> ;
                 case "1" -> ;
@@ -40,6 +40,8 @@ public class RoomBooking {
                 case "5" -> flag = false;
                 default -> System.out.println("Please enter a menu option");
             }
+
+ */
         }
     }
 
@@ -51,10 +53,13 @@ public class RoomBooking {
         System.out.println("Enter option (0-2):");
         String option = s.nextLine();
         switch (option) {
+            /*
             case "0" -> updateRoomType;
             case "1" -> updateMaxCapacity;
             case "2" -> updateDistantCapacity;
             default -> System.out.println("Please enter a menu option");
+
+             */
         }
     }
 
@@ -68,7 +73,10 @@ public class RoomBooking {
         String room = null;
 
         System.out.println("Please choose a Room to update");
+        /*
         roomList();
+
+         */
 
         while (flag) {
             System.out.println("Please enter the ID of the Room to update");

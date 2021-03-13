@@ -36,8 +36,8 @@ public class Module{
     @Column
     private int numEnrolled;
 
-    @OneToMany(mappedBy = "module")
-    private List<Booking> module;
+    @OneToMany(mappedBy = "moduleID")
+    private List<Booking> bookings;
 
     @ManyToMany(mappedBy = "modules")
     private Set<Staff> staff = new HashSet<>();
@@ -46,7 +46,7 @@ public class Module{
     private Set<Student> students = new HashSet<>();
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
-                  int numPracticals, double practicalLength, int numEnrolled, List<Booking> module) {
+                  int numPracticals, double practicalLength, int numEnrolled, List<Booking> bookings) {
         this.moduleID = moduleID;
         this.moduleName = moduleName;
         this.credits = credits;
@@ -56,6 +56,7 @@ public class Module{
         this.numPracticals = numPracticals;
         this.practicalLength = practicalLength;
         this.numEnrolled = numEnrolled;
+        this.bookings = bookings;
     }
 
     public Module(){
@@ -133,12 +134,12 @@ public class Module{
         this.numEnrolled = numEnrolled;
     }
 
-    public List<Booking> getModule() {
-        return module;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setModule(List<Booking> module) {
-        this.module = module;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public Set<Staff> getStaff() {
