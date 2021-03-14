@@ -1,15 +1,18 @@
 package csc1035.project2;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import java.util.List;
+import java.util.Scanner;
 
 public class RoomBooking {
 
     public static void main(String[] args) {
         roomList();
+        cancel();
         confirmation();
     }
 
@@ -25,6 +28,43 @@ public class RoomBooking {
 
         for (Room r : rooms)
             System.out.println(r.getRoomNumber());
+    }
+
+    public static void cancel() {
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Query bookingList = session.createQuery("from Booking");
+        List<Booking> bookings = (List<Booking>) bookingList.list();
+        session.getTransaction().commit();
+        session.close();
+
+        for (Booking b : bookings) {
+            System.out.println("Booking ID: " + b.getBookingID());
+            System.out.println("User ID: " + b.getUserID());
+            System.out.println("Room Number: " + b.getRoomNumber());
+            System.out.println("\n");
+        }
+
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("Enter booking ID that you want to cancel: ");
+        int userChoice = s.nextInt();
+
+        try {
+            Session session1 = sessionFactory.openSession();
+            session1.beginTransaction();
+
+            Booking booking = session1.get(Booking.class, userChoice);
+            session1.delete(booking);
+            session1.getTransaction().commit();
+        } catch (HibernateException e) {
+            if(session!=null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public static void confirmation() {
