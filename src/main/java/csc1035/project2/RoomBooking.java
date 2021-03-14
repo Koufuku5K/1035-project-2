@@ -1,5 +1,6 @@
 package csc1035.project2;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,18 +11,12 @@ import java.util.Scanner;
 
 public class RoomBooking {
 
-    public static void main(String[] args) {
-        roomList();
-        cancel();
-        confirmation();
-    }
-
     public static void roomList() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Query roomList = session.createQuery("from Room");
+        Query roomList = session.createQuery("FROM Room");
         List<Room> rooms = (List<Room>) roomList.list();
         session.getTransaction().commit();
         session.close();
@@ -35,7 +30,7 @@ public class RoomBooking {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        Query bookingList = session.createQuery("from Booking");
+        Query bookingList = session.createQuery("FROM Booking");
         List<Booking> bookings = (List<Booking>) bookingList.list();
         session.getTransaction().commit();
         session.close();
@@ -49,7 +44,7 @@ public class RoomBooking {
 
         Scanner s = new Scanner(System.in);
 
-        System.out.println("Enter booking ID that you want to cancel: ");
+        System.out.println("Enter the booking ID that you want to cancel: ");
         int userChoice = s.nextInt();
 
         try {
@@ -83,6 +78,27 @@ public class RoomBooking {
             System.out.println("Booking details:\n" + "User ID: " + b.getUserID());
             System.out.println("Room Number: " + b.getRoomNumber());
             System.out.println("Date: " + b.getDate());
+        }
+    }
+
+    public static void timetable() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter room number: ");
+        double roomNumber = s.nextDouble();
+
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber GROUP BY B.date";
+        Query timetable = session.createQuery(hql);
+        timetable.setParameter("roomNumber", roomNumber);
+        List<Booking> bookings = (List<Booking>)timetable.list();
+        session.getTransaction().commit();
+        session.close();
+
+        for (Booking b : bookings) {
+            System.out.println(b);
         }
     }
 
