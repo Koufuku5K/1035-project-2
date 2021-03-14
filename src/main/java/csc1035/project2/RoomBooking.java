@@ -1,5 +1,6 @@
 package csc1035.project2;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -10,6 +11,7 @@ import java.util.Scanner;
 
 public class RoomBooking {
     public static Scanner s = new Scanner(System.in);
+    public static Session session = HibernateUtil.getSessionFactory().openSession();
 
     public static void main(String[] args) {
         menu();
@@ -30,41 +32,45 @@ public class RoomBooking {
                                "-------------------------------");
             System.out.println("Enter option (0-5):");
             String option = s.nextLine();
-/*
+
             switch (option) {
                 case "0" -> ;
                 case "1" -> ;
                 case "2" -> ;
                 case "3" -> ;
-                case "4" -> chooseField();
+                case "4" -> updateRoom();
                 case "5" -> flag = false;
                 default -> System.out.println("Please enter a menu option");
             }
-
- */
         }
     }
 
-    private static void chooseField() {
-        System.out.println("Please choose a field to update");
-        System.out.println(" 0 - Room Type");
-        System.out.println(" 1 - Max Capacity");
-        System.out.println(" 2 - Social Distant Capacity");
-        System.out.println("Enter option (0-2):");
-        String option = s.nextLine();
-        switch (option) {
-            /*
-            case "0" -> updateRoomType;
-            case "1" -> updateMaxCapacity;
-            case "2" -> updateDistantCapacity;
-            default -> System.out.println("Please enter a menu option");
 
-             */
-        }
-    }
 
-    private static void updateRoomType() {
+    private static void updateRoom() {
         String room = chooseRoom();
+        String field = chooseField();
+        System.out.println("Please enter the new data");
+        String newData = s.nextLine();
+
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            Room r = (session.get(Room.class, room));
+            switch (field) {
+                case "roomType" -> r.setRoomType(newData);
+                case "maxCapacity" -> r.setMaxCapacity(Integer.parseInt(newData));
+                case "socialDistantCapacity" -> r.setSocialDistanceCapacity(Integer.parseInt(newData));
+            }
+            session.update(r);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            if (session != null) session.getTransaction().rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
         
     }
 
@@ -73,10 +79,7 @@ public class RoomBooking {
         String room = null;
 
         System.out.println("Please choose a Room to update");
-        /*
         roomList();
-
-         */
 
         while (flag) {
             System.out.println("Please enter the ID of the Room to update");
@@ -84,6 +87,29 @@ public class RoomBooking {
             flag = !validID(room);
         }
         return room;
+    }
+
+    private static String chooseField() {
+        String field = null;
+        System.out.println("Please choose a field to update");
+        System.out.println(" 0 - Room Type");
+        System.out.println(" 1 - Max Capacity");
+        System.out.println(" 2 - Social Distant Capacity");
+        System.out.println("Enter option (0-2):");
+        String option = s.nextLine();
+        switch (option) {
+            case "0" -> {
+                field = "roomType";
+            }
+            case "1" -> {
+                field = "maxCapacity";
+            }
+            case "2" -> {
+                field = "socialDistantCapacity";
+            }
+            default -> System.out.println("Please enter a menu option");
+        }
+        return field;
     }
 
     private static boolean validID(String roomNumber) {
