@@ -20,4 +20,13 @@ public class Staff extends User {
     public void setModules(Set<Module> modules) {
         this.modules = modules;
     }
+    public Staff(){}
+
+    public String getTeaching() {
+        return teaching;
+    }
+
+    public void setTeaching(String teaching) {
+        this.teaching = teaching;
+    }
 }
