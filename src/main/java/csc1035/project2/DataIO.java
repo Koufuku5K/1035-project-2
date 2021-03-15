@@ -1,3 +1,4 @@
+package csc1035.project2;
 import csc1035.project2.HibernateUtil;
 import csc1035.project2.Room;
 import csc1035.project2.Module;
@@ -21,8 +22,6 @@ public class DataIO {
         int capacity = Integer.parseInt(s.nextLine());
         System.out.println("Please enter room socially distanced capacity:");
         int socialCapacity = Integer.parseInt(s.nextLine());
-
-        Room r = new Room(room,type,socialCapacity,capacity);
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -82,20 +81,41 @@ public class DataIO {
 
     public void createStaff(){
 
-
+        String temp = "temp";
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the staff members first name:");
         String firstName = s.nextLine();
         System.out.println("Please enter the staff members second:");
-        String secondName = s.nextLine();
+        String lastName = s.nextLine();
 
-        Staff S = new Staff(ID,firstName,secondName);
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
 
+            Staff S = new Staff();
+            S.setId(ID);
+            S.setFirstName(firstName);
+            S.setLastName(lastName);
+            S.setTeaching(temp);
+
+            session.save(S);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
     }
 
     public void createStudent(){
 
+        String temp = "temp";
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the students first name:");
@@ -103,8 +123,29 @@ public class DataIO {
         System.out.println("Please enter the students second:");
         String lastName = s.nextLine();
 
-        Students S = new Students(ID,firstName,lastName);
 
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            Students S = new Students();
+            S.setId(ID);
+            S.setFirstName(firstName);
+            S.setLastName(lastName);
+            S.setAttending(temp);
+
+            session.save(S);
+            session.getTransaction().commit();
+        }
+        catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
     }
 
     public static void main(String[] args) {
