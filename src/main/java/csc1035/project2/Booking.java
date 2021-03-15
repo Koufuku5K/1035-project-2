@@ -110,11 +110,11 @@ public class Booking {
         this.date = date;
     }
 
-    public boolean isSociallyDistant() {
+    public boolean getIsSociallyDistant() {
         return isSociallyDistant;
     }
 
-    public void setSociallyDistant(boolean sociallyDistant) {
+    public void setIsSociallyDistant(boolean sociallyDistant) {
         isSociallyDistant = sociallyDistant;
     }
 

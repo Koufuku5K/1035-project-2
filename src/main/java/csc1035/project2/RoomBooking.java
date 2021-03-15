@@ -2,7 +2,6 @@ package csc1035.project2;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,7 +33,7 @@ public class RoomBooking {
             String option = s.nextLine();
 
             switch (option) {
-                case "0" -> roomList();
+                case "0" -> listRoom();
                 case "1" -> booking();
                 case "2" -> ;
                 case "3" -> ;
@@ -97,28 +96,54 @@ public class RoomBooking {
         List<Room> availableRooms = getRooms();
         List<Booking> allBookings = getBookings();
 
-        typeFilter(availableRooms, roomType);
-        sizeFilter(availableRooms, numPeople, isSociallyDistant);
-        dateFilter(allBookings, date);
-        timeFilter(availableRooms, allBookings, startTime, duration, userID);
+        availableRooms = typeFilter(availableRooms, roomType);
+        availableRooms = sizeFilter(availableRooms, numPeople, isSociallyDistant);
+        allBookings = dateFilter(allBookings, date);
+        availableRooms = timeFilter(availableRooms, allBookings, startTime, duration, userID);
 
         if (availableRooms.isEmpty()) {
             System.out.println("There are no available rooms");
         } else {
             listRooms();
         }
+        String room = chooseRoom(availableRooms);
 
+        try {
+            session.beginTransaction();
+
+            Booking b = new Booking();
+            b.setUserID();
+            b.setRoomNumber();
+            b.setModuleID();
+            b.setStartTime(startTime);
+            b.setDuration(duration);
+            b.setDate(date);
+            b.setIsSociallyDistant(isSociallyDistant);
+            b.setBookingType(bookingType);
+            b.setNumPeople(numPeople);
+
+            session.save(b);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
-    public static void typeFilter(List<Room> rooms , String type){
+    public static List<Room> typeFilter(List<Room> rooms, String type){
         for (Room r: rooms) {
             if (!r.getRoomType().equals(type)) {
                 rooms.remove(r);
             }
         }
+        return rooms;
     }
 
-    public static void sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
+    public static List<Room> sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
         for (Room r: rooms) {
             if (socialDistancing) {
                 if (r.getSocialDistanceCapacity() < groupSize) {
@@ -130,17 +155,19 @@ public class RoomBooking {
                 }
             }
         }
+        return rooms;
     }
 
-    public static void dateFilter(List<Booking> bookings, Calendar date) {
+    public static List<Booking> dateFilter(List<Booking> bookings, Calendar date) {
         for (Booking b: bookings) {
             if (!b.getDate().equals(date)) {
                 bookings.remove(b);
             }
         }
+        return bookings;
     }
 
-    public static void timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
+    public static List<Room> timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
                                   int duration, String id) {
         boolean sameUser = false;
         Calendar ourEndTime = Calendar.getInstance();
@@ -154,26 +181,18 @@ public class RoomBooking {
             endTime.add(Calendar.HOUR_OF_DAY, duration);
             if ((endTime.after(ourEndTime) || endTime.equals(ourEndTime)) &&
                     (startTime.before(ourEndTime) || startTime.equals(ourEndTime))) {
-                if (userFilter(b, id)) {
+                if ((b.getUserID().getuserID()).equals(id)) {
                     rooms.clear();
                     break;
                 }
                 rooms.remove(b.getRoomNumber());
             }
         }
+        return rooms;
     }
-
-    public static boolean userFilter(Booking b, String id) {
-        boolean sameUser = false;
-        if ((b.getUserID().getuserID()).equals(id)) {
-            sameUser = true;
-        }
-        return sameUser;
-    }
-
 
     public static void updateRoom() {
-        String room = chooseRoom();
+        String room = chooseRoom(getRoom());
         String field = chooseField();
         System.out.println("Please enter the new data:");
         String newData = s.nextLine();
