@@ -63,12 +63,17 @@ public class RoomBooking {
     }
 
     public static void confirmation() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Enter the room number to get the booking confirmation: ");
+        double roomNumber = s.nextDouble();
+
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
-        String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R where B.roomNumber = R.roomNumber";
+        String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R WHERE B.roomNumber = :roomNumber";
         Query confirmation = session.createQuery(hql);
+        confirmation.setParameter("roomNumber", roomNumber);
         List<Booking> booking = (List<Booking>)confirmation.list();
         session.getTransaction().commit();
         session.close();
