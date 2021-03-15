@@ -89,6 +89,7 @@ public class RoomBooking {
 
         System.out.println("Please enter the module ID, or leave blank");
         String moduleID = s.nextLine();
+        Module module = getModule(moduleID);
 
         System.out.println("Please enter the booking type:");
         String bookingType = s.nextLine();
@@ -109,12 +110,13 @@ public class RoomBooking {
         String room = chooseRoom(availableRooms);
 
         try {
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
             Booking b = new Booking();
-            b.setUserID();
-            b.setRoomNumber();
-            b.setModuleID();
+            b.setUserID(getUser(userID));
+            b.setRoomNumber(getRoom(room));
+            b.setModuleID(getModule(moduleID));
             b.setStartTime(startTime);
             b.setDuration(duration);
             b.setDate(date);
@@ -258,6 +260,27 @@ public class RoomBooking {
             }
         }
         return true;
+    }
+
+    public static User getUser(String ID) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        User user = (User) session.get(User.class, ID);
+        session.close();
+        return user;
+    }
+
+    public static Module getModule(String ID) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Module module = (Module) session.get(Module.class, ID);
+        session.close();
+        return module;
+    }
+
+    public static Room getRoom(String ID) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Room room = (Room) session.get(Room.class, ID);
+        session.close();
+        return room;
     }
 }
 
