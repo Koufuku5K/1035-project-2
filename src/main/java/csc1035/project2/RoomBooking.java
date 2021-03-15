@@ -3,7 +3,6 @@ package csc1035.project2;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -101,26 +100,44 @@ public class RoomBooking {
         typeFilter(availableRooms, roomType);
         sizeFilter(availableRooms, numPeople, isSociallyDistant);
         dateFilter(allBookings, date);
-        timeFilter(availableRooms, allBookings, startTime, duration);
+        timeFilter(availableRooms, allBookings, startTime, duration, userID);
+
+        listRooms();
     }
 
     public static void typeFilter(List<Room> rooms , String type){
-        rooms.removeIf(r -> !r.getRoomType().equals(type));
+        for (Room r: rooms) {
+            if (!r.getRoomType().equals(type)) {
+                rooms.remove(r);
+            }
+        }
     }
 
     public static void sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
-        if (socialDistancing) {
-            rooms.removeIf(r -> r.getSocialDistanceCapacity() < groupSize);
-        } else {
-            rooms.removeIf(r -> r.getMaxCapacity() < groupSize);
+        for (Room r: rooms) {
+            if (socialDistancing) {
+                if (r.getSocialDistanceCapacity() < groupSize) {
+                    rooms.remove(r);
+                }
+            } else {
+                if (r.getMaxCapacity() < groupSize) {
+                    rooms.remove(r);
+                }
+            }
         }
     }
 
     public static void dateFilter(List<Booking> bookings, Calendar date) {
-        bookings.removeIf(b -> !b.getDate().equals(date));
+        for (Booking b: bookings) {
+            if (!b.getDate().equals(date)) {
+                bookings.remove(b);
+            }
+        }
     }
 
-    public static void timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime, int duration) {
+    public static void timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
+                                  int duration, String id) {
+        boolean sameUser = false;
         Calendar ourEndTime = Calendar.getInstance();
         ourEndTime.setTime(ourStartTime.getTime());
         ourEndTime.add(Calendar.HOUR_OF_DAY, duration);
@@ -132,10 +149,21 @@ public class RoomBooking {
             endTime.add(Calendar.HOUR_OF_DAY, duration);
             if ((endTime.after(ourEndTime) || endTime.equals(ourEndTime)) &&
                     (startTime.before(ourEndTime) || startTime.equals(ourEndTime))) {
-                    userFilter();
-                    rooms.removeIf(r -> r.getRoomNumber().equals(b.getRoomNumber()));
+                if (userFilter(b, id)) {
+                    rooms.clear();
+                    break;
+                }
+                rooms.remove(b.getRoomNumber());
             }
         }
+    }
+
+    public static boolean userFilter(Booking b, String id) {
+        boolean sameUser = false;
+        if ((b.getUserID().getuserID()).equals(id)) {
+            sameUser = true;
+        }
+        return sameUser;
     }
 
 
