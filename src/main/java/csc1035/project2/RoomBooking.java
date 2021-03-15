@@ -102,7 +102,12 @@ public class RoomBooking {
         dateFilter(allBookings, date);
         timeFilter(availableRooms, allBookings, startTime, duration, userID);
 
-        listRooms();
+        if (availableRooms.isEmpty()) {
+            System.out.println("There are no available rooms");
+        } else {
+            listRooms();
+        }
+
     }
 
     public static void typeFilter(List<Room> rooms , String type){
@@ -192,19 +197,16 @@ public class RoomBooking {
         }
     }
 
-    public static String chooseRoom() {
-        boolean flag = true;
-        String room = null;
+    public static String chooseRoom(List<Room> rooms) {
+        String roomNumber;
 
-        System.out.println("Please choose a Room to update");
-        roomList();
-
-        while (flag) {
-            System.out.println("Please enter the ID of the Room to update:");
-            room = s.nextLine();
-            flag = !validID(room);
-        }
-        return room;
+        System.out.println("Please choose a Room");
+        listRoom(rooms);
+        do {
+            System.out.println("Please enter the ID of the room you would like:");
+            roomNumber = s.nextLine();
+        } while (validID(roomNumber, rooms));
+        return roomNumber;
     }
 
     public static String chooseField() {
@@ -230,15 +232,13 @@ public class RoomBooking {
         return field;
     }
 
-    public static boolean validID(String roomNumber) {
-        Session s = HibernateUtil.getSessionFactory().openSession();
-        s.beginTransaction();
-        Query query = s.createQuery("FROM Room r WHERE r.roomNumber = :id");
-        query.setParameter("id", roomNumber);
-        s.getTransaction().commit();
-
-        List results = query.getResultList();
-        return results.size() != 0;
+    public static boolean validID(String roomNumber, List<Room> rooms) {
+        for (Room r: rooms) {
+            if (r.getRoomNumber().equals(roomNumber)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 
