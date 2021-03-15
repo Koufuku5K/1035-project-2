@@ -1,6 +1,8 @@
 package csc1035.project2;
 
 import javax.persistence.*;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity(name = "Booking")
 public class Booking {
@@ -19,17 +21,17 @@ public class Booking {
     private Room roomNumber;
 
     @ManyToOne
-    @JoinColumn(nullable = false, name = "moduleID")
+    @JoinColumn(name = "moduleID")
     private Module moduleID;
 
     @Column
-    private String startTime;
+    private Calendar startTime;
 
     @Column
     private int duration;
 
     @Column
-    private String date;
+    private Calendar date;
 
     @Column
     private boolean isSociallyDistant;
@@ -40,8 +42,8 @@ public class Booking {
     @Column
     private int numPeople;
 
-    public Booking(User userID, Room roomNumber, Module moduleID, String startTime, int duration,
-                   String date, boolean isSociallyDistant, String bookingType, int numPeople) {
+    public Booking(User userID, Room roomNumber, Module moduleID, Calendar startTime, int duration,
+                   Calendar date, boolean isSociallyDistant, String bookingType, int numPeople) {
         this.userID = userID;
         this.roomNumber = roomNumber;
         this.moduleID = moduleID;
@@ -84,11 +86,11 @@ public class Booking {
         this.moduleID = moduleID;
     }
 
-    public String getStartTime() {
+    public Calendar getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Calendar startTime) {
         this.startTime = startTime;
     }
 
@@ -100,11 +102,11 @@ public class Booking {
         this.duration = duration;
     }
 
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
