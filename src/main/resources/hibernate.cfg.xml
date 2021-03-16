@@ -19,7 +19,7 @@
         <mapping class="csc1035.project2.Room" />
         <mapping class="csc1035.project2.User" />
         <mapping class="csc1035.project2.Staff" />
-        <mapping class="csc1035.project2.Student" />
+        <mapping class="csc1035.project2.Students" />
 
     </session-factory>
 </hibernate-configuration>
