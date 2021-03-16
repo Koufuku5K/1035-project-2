@@ -3,6 +3,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class represents the table for students, inherited from user class.
+ *
+ * @author everyone
+ *
+ */
 @Entity(name = "Student")
 public class Students extends User {
 

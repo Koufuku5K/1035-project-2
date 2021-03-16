@@ -74,7 +74,6 @@ public class DataIO {
     }
 
     public void createStaff(){
-        String temp = "temp";
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the staff members first name:");
@@ -106,7 +105,6 @@ public class DataIO {
     }
 
     public void createStudent(){
-        String temp = "temp";
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the students first name:");

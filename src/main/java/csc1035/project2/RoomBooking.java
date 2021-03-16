@@ -137,6 +137,10 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * This is a method that prints out all of the rooms that are listed in the room
+     * table.
+     */
     public static List<Room> getRooms() {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
@@ -167,6 +171,10 @@ public class RoomBooking {
             System.out.println(r);
     }
 
+    /**
+     * This is a method that allows the user to cancel their booking by entering the
+     * booking ID of the booking that they want to cancel.
+     */
     public static void cancel() {
         List<Booking> bookings = getBookings();
 
@@ -183,7 +191,6 @@ public class RoomBooking {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-
 
             Booking booking = session.get(Booking.class, userChoice);
             session.delete(booking);
@@ -345,6 +352,11 @@ public class RoomBooking {
     }
 
 
+    /**
+     * This is a method that returns the booking confirmation of the booking that the
+     * user made. It prints out some of the important information on the booking
+     * confirmation.
+     */
     public static void confirmation() {
         System.out.println("Enter the room number to get the booking confirmation: ");
         String roomNumber = s.nextLine();
@@ -372,6 +384,9 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * This method produces the timetable for a room.
+     */
     public static void timetable() {
         System.out.println("Enter room number: ");
         String roomNumber = s.nextLine();
