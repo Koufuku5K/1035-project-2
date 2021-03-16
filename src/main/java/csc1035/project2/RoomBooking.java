@@ -29,9 +29,10 @@ public class RoomBooking {
                                "| 2 - Cancel Booking          |\n" +
                                "| 3 - View Room Timetable     |\n" +
                                "| 4 - Update A Room           |\n" +
-                               "| 5 - Exit                    |\n" +
+                               "| 5 - Get Booking Confirmation|\n" +
+                               "| 6 - Exit                    |\n" +
                                "-------------------------------");
-            System.out.println("Enter option (0-5):");
+            System.out.println("Enter option (0-6):");
             String option = s.nextLine();
 
             switch (option) {
@@ -40,7 +41,8 @@ public class RoomBooking {
                 case "2" -> cancel();
                 case "3" -> timetable();
                 case "4" -> updateRoom();
-                case "5" -> flag = false;
+                case "5" -> confirmation();
+                case "6" -> flag = false;
                 default -> System.out.println("Please enter a menu option");
             }
         }
@@ -53,7 +55,7 @@ public class RoomBooking {
         System.out.println("Please choose a room type\n" +
                 " PC Cluster \n" +
                 " Lecture Hall \n" +
-                " Seminar Room" +
+                " Seminar Room \n" +
                 " Meeting Room");
         System.out.println("Please enter the room type:");
         String roomType = s.nextLine();
@@ -68,7 +70,7 @@ public class RoomBooking {
             e.printStackTrace();
         }
 
-        System.out.println("Please enter the time (HH:mm");
+        System.out.println("Please enter the time (HH:mm):");
         String tempTime = s.nextLine();
         Calendar startTime = Calendar.getInstance();
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
@@ -127,9 +129,7 @@ public class RoomBooking {
                 session.save(b);
                 session.getTransaction().commit();
             } catch (HibernateException e) {
-                if (session != null) {
-                    session.getTransaction().rollback();
-                }
+                if (session != null) session.getTransaction().rollback();
                 e.printStackTrace();
             } finally {
                 session.close();
@@ -347,23 +347,28 @@ public class RoomBooking {
 
     public static void confirmation() {
         System.out.println("Enter the room number to get the booking confirmation: ");
-        double roomNumber = Double.parseDouble(s.nextLine());
+        String roomNumber = s.nextLine();
+        Room room = getRoom(roomNumber);
 
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R WHERE B.roomNumber = :roomNumber";
+        String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber";
         Query confirmation = session.createQuery(hql);
-        confirmation.setParameter("roomNumber", roomNumber);
+        confirmation.setParameter("roomNumber", room);
         List<Booking> booking = (List<Booking>)confirmation.list();
         session.getTransaction().commit();
         session.close();
 
         for (Booking b : booking) {
+            System.out.println("\n");
             System.out.println("Your Booking Confirmation:\n" + "Booking ID: " + b.getBookingID());
-            System.out.println("Booking details:\n" + "User ID: " + b.getUserID());
-            System.out.println("Room Number: " + b.getRoomNumber());
-            System.out.println("Date: " + b.getDate());
+            System.out.println("Booking details:\n" + "User ID: " + b.getUserID().getuserID());
+            System.out.println("Room Number: " + b.getRoomNumber().getRoomNumber());
+            System.out.println("Date: " + b.getDate().get(Calendar.DAY_OF_MONTH) + "/"
+                                        + b.getDate().get(Calendar.MONTH) + "/"
+                                        + b.getDate().get(Calendar.YEAR));
+            System.out.println("\n");
         }
     }
 
