@@ -12,8 +12,6 @@ public class DataIO {
     private Session session = HibernateUtil.getSessionFactory().openSession();
 
     public void createRoom(){
-
-
         System.out.println("Please enter room number:");
         String room = s.nextLine();
         System.out.println("Please enter room type:");
@@ -43,12 +41,9 @@ public class DataIO {
         } finally {
             session.close();
         }
-
     }
 
     public void createModule(){
-
-
         System.out.println("Please enter the module ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the module name:");
@@ -76,11 +71,9 @@ public class DataIO {
         int numEnrolled = s.nextInt();
 
         Module m = new Module();
-
     }
 
     public void createStaff(){
-
         String temp = "temp";
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
@@ -113,7 +106,6 @@ public class DataIO {
     }
 
     public void createStudent(){
-
         String temp = "temp";
         System.out.println("Please enter the students ID:");
         String ID = s.nextLine();
@@ -121,7 +113,6 @@ public class DataIO {
         String firstName = s.nextLine();
         System.out.println("Please enter the students second:");
         String lastName = s.nextLine();
-
 
         try {
             session = HibernateUtil.getSessionFactory().openSession();

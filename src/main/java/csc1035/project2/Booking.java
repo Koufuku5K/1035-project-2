@@ -2,7 +2,6 @@ package csc1035.project2;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Date;
 
 @Entity(name = "Booking")
 public class Booking {
