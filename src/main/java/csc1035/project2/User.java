@@ -2,7 +2,7 @@ package csc1035.project2;
 import javax.persistence.*;
 
 @Entity
-public class UniversityPerson {
+public class User {
     @Id
     private String id;
     @Column
@@ -10,12 +10,12 @@ public class UniversityPerson {
     @Column
     private String lastName;
 
-    public UniversityPerson(String id, String firstName, String lastName) {
+    public User(String id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    public UniversityPerson(){}
+    public User(){}
 
     public String getId() {
         return id;
