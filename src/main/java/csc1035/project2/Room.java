@@ -72,4 +72,14 @@ public class Room {
     public void setRoom(List<Booking> room) {
         this.room = room;
     }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomNumber='" + roomNumber + '\'' +
+                ", roomType='" + roomType + '\'' +
+                ", maxCapacity=" + maxCapacity +
+                ", socialDistanceCapacity=" + socialDistanceCapacity +
+                '}';
+    }
 }
