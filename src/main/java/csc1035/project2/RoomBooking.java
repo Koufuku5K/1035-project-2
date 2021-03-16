@@ -1,6 +1,5 @@
 package csc1035.project2;
 
-import com.sun.xml.bind.v2.TODO;
 import org.hibernate.Session;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -108,33 +107,33 @@ public class RoomBooking {
             System.out.println("There are no available rooms");
         } else {
             listRooms(availableRooms);
-        }
-        String room = chooseRoom(availableRooms);
+            String room = chooseRoom(availableRooms);
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
+            try {
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
 
-            Booking b = new Booking();
-            b.setUserID(getUser(userID));
-            b.setRoomNumber(getRoom(room));
-            b.setModuleID(getModule(moduleID));
-            b.setStartTime(startTime);
-            b.setDuration(duration);
-            b.setDate(date);
-            b.setIsSociallyDistant(isSociallyDistant);
-            b.setBookingType(bookingType);
-            b.setNumPeople(numPeople);
+                Booking b = new Booking();
+                b.setUserID(getUser(userID));
+                b.setRoomNumber(getRoom(room));
+                b.setModuleID(getModule(moduleID));
+                b.setStartTime(startTime);
+                b.setDuration(duration);
+                b.setDate(date);
+                b.setIsSociallyDistant(isSociallyDistant);
+                b.setBookingType(bookingType);
+                b.setNumPeople(numPeople);
 
-            session.save(b);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null) {
-                session.getTransaction().rollback();
+                session.save(b);
+                session.getTransaction().commit();
+            } catch (HibernateException e) {
+                if (session != null) {
+                    session.getTransaction().rollback();
+                }
+                e.printStackTrace();
+            } finally {
+                session.close();
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
