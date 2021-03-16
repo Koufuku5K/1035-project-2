@@ -132,4 +132,20 @@ public class Booking {
     public void setNumPeople(int numPeople) {
         this.numPeople = numPeople;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "bookingID=" + bookingID +
+                ", userID=" + userID +
+                ", roomNumber=" + roomNumber +
+                ", moduleID=" + moduleID +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                ", date=" + date +
+                ", isSociallyDistant=" + isSociallyDistant +
+                ", bookingType='" + bookingType + '\'' +
+                ", numPeople=" + numPeople +
+                '}';
+    }
 }
