@@ -1,5 +1,6 @@
 package csc1035.project2;
 import javax.persistence.*;
+<<<<<<< HEAD
 import java.util.List;
 
 @Entity(name = "User")
@@ -34,6 +35,34 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+=======
+
+@Entity
+public class User {
+    @Id
+    private String id;
+    @Column
+    private String firstName;
+    @Column
+    private String lastName;
+
+    public User(String id, String firstName, String lastName) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+<<<<<<<< HEAD:src/main/java/csc1035/project2/User.java
+    public User(){}
+========
+>>>>>>>> Rename UniversityPerson to User:src/main/java/csc1035/project2/UniversityPerson.java
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+>>>>>>> Rename UniversityPerson to User
     }
 
     public String getFirstName() {
@@ -51,6 +80,7 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+<<<<<<< HEAD
 
     public List<Booking> getUser() {
         return user;
@@ -59,4 +89,6 @@ public class User {
     public void setUser(List<Booking> user) {
         this.user = user;
     }
+=======
+>>>>>>> Rename UniversityPerson to User
 }
