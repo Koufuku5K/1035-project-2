@@ -1,8 +1,10 @@
 package csc1035.project2;
 
+import com.sun.xml.bind.v2.TODO;
 import org.hibernate.Session;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
@@ -94,8 +96,8 @@ public class RoomBooking {
         System.out.println("Please enter the booking type:");
         String bookingType = s.nextLine();
 
-        List<Room> availableRooms = getRooms();
-        List<Booking> allBookings = getBookings();
+        List<Room> availableRooms = new ArrayList<>(getRooms());
+        List<Booking> allBookings = new ArrayList<>(getBookings());
 
         availableRooms = typeFilter(availableRooms, roomType);
         availableRooms = sizeFilter(availableRooms, numPeople, isSociallyDistant);
@@ -196,40 +198,47 @@ public class RoomBooking {
     }
 
     public static List<Room> typeFilter(List<Room> rooms, String type){
+        List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
             if (!r.getRoomType().equals(type)) {
-                rooms.remove(r);
+                toRemove.add(r);
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
     public static List<Room> sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
+        List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
             if (socialDistancing) {
                 if (r.getSocialDistanceCapacity() < groupSize) {
-                    rooms.remove(r);
+                    toRemove.add(r);
                 }
             } else {
                 if (r.getMaxCapacity() < groupSize) {
-                    rooms.remove(r);
+                    toRemove.add(r);
                 }
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
     public static List<Booking> dateFilter(List<Booking> bookings, Calendar date) {
+        List<Booking> toRemove = new ArrayList<>();
         for (Booking b: bookings) {
             if (!b.getDate().equals(date)) {
-                bookings.remove(b);
+                toRemove.add(b);
             }
         }
+        bookings.removeAll(toRemove);
         return bookings;
     }
 
     public static List<Room> timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
                                   int duration, String id) {
+        List<Room> toRemove = new ArrayList<>();
         Calendar ourEndTime = Calendar.getInstance();
         ourEndTime.setTime(ourStartTime.getTime());
         ourEndTime.add(Calendar.HOUR_OF_DAY, duration);
@@ -242,12 +251,13 @@ public class RoomBooking {
             if ((endTime.after(ourEndTime) || endTime.equals(ourEndTime)) &&
                     (startTime.before(ourEndTime) || startTime.equals(ourEndTime))) {
                 if ((b.getUserID().getuserID()).equals(id)) {
-                    rooms.clear();
+                    toRemove.addAll(getRooms());
                     break;
                 }
-                rooms.remove(b.getRoomNumber());
+                toRemove.add(b.getRoomNumber());
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
