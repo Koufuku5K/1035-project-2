@@ -369,14 +369,15 @@ public class RoomBooking {
 
     public static void timetable() {
         System.out.println("Enter room number: ");
-        double roomNumber = s.nextDouble();
+        String roomNumber = s.nextLine();
+        Room room = getRoom(roomNumber);
 
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber GROUP BY B.date";
         Query timetable = session.createQuery(hql);
-        timetable.setParameter("roomNumber", roomNumber);
+        timetable.setParameter("roomNumber", room);
         List<Booking> bookings = (List<Booking>)timetable.list();
         session.getTransaction().commit();
         session.close();
