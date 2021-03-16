@@ -1,7 +1,9 @@
 package csc1035.project2;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 @Entity(name = "Booking")
 public class Booking {
@@ -135,12 +137,20 @@ public class Booking {
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date dateToParse = getDate().getTime();
+        String date = dateFormat.format(dateToParse);
+
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+        Date timeToParse = getStartTime().getTime();
+        String time = timeFormat.format(timeToParse);
+
         return "Booking{" +
                 "bookingID=" + bookingID +
-                ", userID=" + userID +
-                ", roomNumber=" + roomNumber +
-                ", moduleID=" + moduleID +
-                ", startTime=" + startTime +
+                ", userID=" + userID.getuserID() +
+                ", roomNumber=" + roomNumber.getRoomNumber() +
+                ", moduleID=" + moduleID.getModuleID() +
+                ", startTime=" + time +
                 ", duration=" + duration +
                 ", date=" + date +
                 ", isSociallyDistant=" + isSociallyDistant +
