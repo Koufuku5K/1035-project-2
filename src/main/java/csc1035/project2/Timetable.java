@@ -49,7 +49,7 @@ public class Timetable {
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter the student ID: ");
         String studentID = input.nextLine();
-        Query query = s.createQuery("select b.date, b.startTime, b.roomNumber, m.moduleName, b.duration from Student s where s.userID = "+studentID+"from Student s");
+        Query query = s.createQuery("select b.date, b.startTime, b.roomNumber, m.moduleName, b.duration from Students s where s.userID = "+studentID+"from Students s");
         return query;
     }
 
