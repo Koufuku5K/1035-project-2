@@ -2,7 +2,7 @@ package csc1035.project2;
 import javax.persistence.*;
 
 @Entity
-public class Students extends UniversityPerson {
+public class Students extends User {
     @Column
     private String attending;
 

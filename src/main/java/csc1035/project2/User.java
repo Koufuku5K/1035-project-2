@@ -4,25 +4,25 @@ import javax.persistence.*;
 @Entity
 public class User {
     @Id
-    private String id;
+    private String userID;
     @Column
     private String firstName;
     @Column
     private String lastName;
 
     public User(String id, String firstName, String lastName) {
-        this.id = id;
+        this.userID = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
     public User(){}
 
-    public String getId() {
-        return id;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserID(String id) {
+        this.userID = id;
     }
 
     public String getFirstName() {

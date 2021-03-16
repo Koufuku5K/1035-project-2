@@ -12,7 +12,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private User.userID userID;
+    private User userID;
 
     @ManyToOne
     @JoinColumn(nullable = false)
