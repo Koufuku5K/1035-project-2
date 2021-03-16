@@ -19,7 +19,7 @@ public class RoomBooking {
         menu();
     }
 
-    private static void menu() throws ParseException {
+    public static void menu() {
         boolean flag = true;
 
         while (flag) {
@@ -36,10 +36,10 @@ public class RoomBooking {
             String option = s.nextLine();
 
             switch (option) {
-                case "0" -> listRoom();
+                case "0" -> listRooms(getRooms());
                 case "1" -> booking();
-                case "2" -> ;
-                case "3" -> ;
+                case "2" -> cancel();
+                case "3" -> timetable();
                 case "4" -> updateRoom();
                 case "5" -> flag = false;
                 default -> System.out.println("Please enter a menu option");
@@ -108,7 +108,7 @@ public class RoomBooking {
         if (availableRooms.isEmpty()) {
             System.out.println("There are no available rooms");
         } else {
-            listRooms();
+            listRooms(availableRooms);
         }
         String room = chooseRoom(availableRooms);
 
@@ -139,7 +139,7 @@ public class RoomBooking {
         }
     }
 
-    public static void roomList() {
+    public static List<Room> getRooms() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -149,11 +149,10 @@ public class RoomBooking {
         session.getTransaction().commit();
         session.close();
 
-        for (Room r : rooms)
-            System.out.println(r.getRoomNumber());
+        return rooms;
     }
 
-    public static void cancel() {
+    public static List<Booking> getBookings() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -162,6 +161,18 @@ public class RoomBooking {
         List<Booking> bookings = (List<Booking>) bookingList.list();
         session.getTransaction().commit();
         session.close();
+
+        return bookings;
+    }
+
+
+    public static void listRooms(List<Room> rooms) {
+        for (Room r : rooms)
+            System.out.println(r);
+    }
+
+    public static void cancel() {
+        List<Booking> bookings = getBookings();
 
         for (Booking b : bookings) {
             System.out.println("Booking ID: " + b.getBookingID());
@@ -248,7 +259,7 @@ public class RoomBooking {
     }
 
     public static void updateRoom() {
-        String room = chooseRoom(getRoom());
+        String room = chooseRoom(getRooms());
         String field = chooseField();
         System.out.println("Please enter the new data:");
         String newData = s.nextLine();
@@ -276,7 +287,7 @@ public class RoomBooking {
         String roomNumber;
 
         System.out.println("Please choose a Room");
-        listRoom(rooms);
+        listRooms(rooms);
         do {
             System.out.println("Please enter the ID of the room you would like:");
             roomNumber = s.nextLine();
@@ -336,7 +347,7 @@ public class RoomBooking {
         session.close();
         return room;
     }
-}
+
 
     public static void confirmation() {
         Scanner s = new Scanner(System.in);
