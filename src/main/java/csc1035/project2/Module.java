@@ -43,7 +43,7 @@ public class Module{
     private Set<Staff> staff = new HashSet<>();
 
     @ManyToMany(mappedBy = "modules")
-    private Set<Student> students = new HashSet<>();
+    private Set<Students> students = new HashSet<>();
 
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
                   int numPracticals, double practicalLength, int numEnrolled, List<Booking> bookings) {
@@ -150,11 +150,11 @@ public class Module{
         this.staff = staff;
     }
 
-    public Set<Student> getStudents() {
+    public Set<Students> getStudents() {
         return students;
     }
 
-    public void setStudents(Set<Student> students) {
+    public void setStudents(Set<Students> students) {
         this.students = students;
     }
 }

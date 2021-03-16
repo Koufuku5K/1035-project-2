@@ -127,7 +127,7 @@ public class DataIO {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
-            Student S = new Student();
+            Students S = new Students();
             S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);

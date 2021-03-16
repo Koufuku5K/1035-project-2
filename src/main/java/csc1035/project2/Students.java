@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "Student")
-public class Student extends User {
+public class Students extends User {
 
     @ManyToMany
     @JoinTable(
