@@ -4,6 +4,13 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This class represents the tables for bookings. It has methods relating to
+ * bookings.
+ *
+ * @author everyone
+ *
+ */
 @Entity(name = "Booking")
 public class Booking {
 
@@ -42,6 +49,21 @@ public class Booking {
     @Column
     private int numPeople;
 
+    /**
+     *
+     * This is the constructor method that compiles the parameter values with the
+     * field variables.
+     *
+     * @param userID this represents the user ID from the user table.
+     * @param roomNumber this represents the room number from the room table.
+     * @param moduleID this represents the module ID from the module table.
+     * @param startTime this represents the start time for a room.
+     * @param duration this represents the duration when the room will be used.
+     * @param date this represents the date the room will be used.
+     * @param isSociallyDistant this represents whether the room is socially distant.
+     * @param bookingType this represents the type of booking.
+     * @param numPeople this represents the number of people in the room.
+     */
     public Booking(User userID, Room roomNumber, Module moduleID, Calendar startTime, int duration,
                    Calendar date, boolean isSociallyDistant, String bookingType, int numPeople) {
         this.userID = userID;

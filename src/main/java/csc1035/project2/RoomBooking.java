@@ -139,6 +139,10 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * This is a method that prints out all of the rooms that are listed in the room
+     * table.
+     */
     public static void roomList() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -153,6 +157,10 @@ public class RoomBooking {
             System.out.println(r.getRoomNumber());
     }
 
+    /**
+     * This is a method that allows the user to cancel their booking by entering the
+     * booking ID of the booking that they want to cancel.
+     */
     public static void cancel() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
@@ -338,6 +346,11 @@ public class RoomBooking {
     }
 }
 
+    /**
+     * This is a method that returns the booking confirmation of the booking that the
+     * user made. It prints out some of the important information on the booking
+     * confirmation.
+     */
     public static void confirmation() {
         Scanner s = new Scanner(System.in);
         System.out.println("Enter the room number to get the booking confirmation: ");
@@ -362,6 +375,9 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * This method produces the timetable for a room.
+     */
     public static void timetable() {
         Scanner s = new Scanner(System.in);
         System.out.println("Enter room number: ");
