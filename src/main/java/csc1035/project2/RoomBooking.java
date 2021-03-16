@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +45,7 @@ public class RoomBooking {
         }
     }
 
-    public static void booking() {
+    public static void booking(){
         System.out.println("Please enter the User ID of who the booking is for:");
         String userID = s.nextLine();
 
@@ -139,8 +137,7 @@ public class RoomBooking {
     }
 
     public static List<Room> getRooms() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query roomList = session.createQuery("FROM Room");
@@ -152,8 +149,7 @@ public class RoomBooking {
     }
 
     public static List<Booking> getBookings() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query bookingList = session.createQuery("FROM Booking");
@@ -180,18 +176,17 @@ public class RoomBooking {
             System.out.println("\n");
         }
 
-        Scanner s = new Scanner(System.in);
-
         System.out.println("Enter the booking ID that you want to cancel: ");
-        int userChoice = s.nextInt();
+        int userChoice = Integer.parseInt(s.nextLine());
 
         try {
-            Session session1 = sessionFactory.openSession();
-            session1.beginTransaction();
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
 
-            Booking booking = session1.get(Booking.class, userChoice);
-            session1.delete(booking);
-            session1.getTransaction().commit();
+
+            Booking booking = session.get(Booking.class, userChoice);
+            session.delete(booking);
+            session.getTransaction().commit();
         } catch (HibernateException e) {
             if(session!=null) session.getTransaction().rollback();
             e.printStackTrace();
@@ -342,12 +337,10 @@ public class RoomBooking {
 
 
     public static void confirmation() {
-        Scanner s = new Scanner(System.in);
         System.out.println("Enter the room number to get the booking confirmation: ");
-        double roomNumber = s.nextDouble();
+        double roomNumber = Double.parseDouble(s.nextLine());
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R WHERE B.roomNumber = :roomNumber";
@@ -366,12 +359,10 @@ public class RoomBooking {
     }
 
     public static void timetable() {
-        Scanner s = new Scanner(System.in);
         System.out.println("Enter room number: ");
         double roomNumber = s.nextDouble();
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber GROUP BY B.date";
