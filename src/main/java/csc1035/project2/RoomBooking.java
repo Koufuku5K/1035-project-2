@@ -47,7 +47,7 @@ public class RoomBooking {
         }
     }
 
-    public static void booking() throws ParseException {
+    public static void booking() {
         System.out.println("Please enter the User ID of who the booking is for:");
         String userID = s.nextLine();
 
@@ -92,7 +92,6 @@ public class RoomBooking {
 
         System.out.println("Please enter the module ID, or leave blank");
         String moduleID = s.nextLine();
-        Module module = getModule(moduleID);
 
         System.out.println("Please enter the booking type:");
         String bookingType = s.nextLine();
@@ -236,7 +235,6 @@ public class RoomBooking {
 
     public static List<Room> timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
                                   int duration, String id) {
-        boolean sameUser = false;
         Calendar ourEndTime = Calendar.getInstance();
         ourEndTime.setTime(ourStartTime.getTime());
         ourEndTime.add(Calendar.HOUR_OF_DAY, duration);
@@ -304,15 +302,9 @@ public class RoomBooking {
         System.out.println("Enter option (0-2):");
         String option = s.nextLine();
         switch (option) {
-            case "0" -> {
-                field = "roomType";
-            }
-            case "1" -> {
-                field = "maxCapacity";
-            }
-            case "2" -> {
-                field = "socialDistantCapacity";
-            }
+            case "0" -> field = "roomType";
+            case "1" -> field = "maxCapacity";
+            case "2" -> field = "socialDistantCapacity";
             default -> System.out.println("Please enter a menu option");
         }
         return field;
@@ -329,21 +321,21 @@ public class RoomBooking {
 
     public static User getUser(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        User user = (User) session.get(User.class, ID);
+        User user = session.get(User.class, ID);
         session.close();
         return user;
     }
 
     public static Module getModule(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Module module = (Module) session.get(Module.class, ID);
+        Module module = session.get(Module.class, ID);
         session.close();
         return module;
     }
 
     public static Room getRoom(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Room room = (Room) session.get(Room.class, ID);
+        Room room = session.get(Room.class, ID);
         session.close();
         return room;
     }
@@ -393,5 +385,4 @@ public class RoomBooking {
             System.out.println(b);
         }
     }
-
 }
