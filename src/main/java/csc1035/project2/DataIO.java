@@ -1,7 +1,4 @@
 package csc1035.project2;
-import csc1035.project2.HibernateUtil;
-import csc1035.project2.Room;
-import csc1035.project2.Module;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import java.util.Scanner;
@@ -9,11 +6,11 @@ import java.util.Scanner;
 public class DataIO {
 
     Session session = HibernateUtil.getSessionFactory().openSession();
-    Scanner s = new Scanner(System.in);
-
-    public void createRoom(){
 
 
+    public static void createRoom(){
+
+        Scanner s = new Scanner(System.in);
         System.out.println("Please enter room number:");
         String room = s.nextLine();
         System.out.println("Please enter room type:");
@@ -23,8 +20,9 @@ public class DataIO {
         System.out.println("Please enter room socially distanced capacity:");
         int socialCapacity = Integer.parseInt(s.nextLine());
 
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+
             session.beginTransaction();
 
             Room r = new Room();
@@ -46,8 +44,9 @@ public class DataIO {
 
     }
 
-    public void createModule(){
+    public static void createModule(){
 
+        Scanner s = new Scanner(System.in);
 
         System.out.println("Please enter the module ID:");
         String ID = s.nextLine();
@@ -79,7 +78,9 @@ public class DataIO {
 
     }
 
-    public void createStaff(){
+    public static void createStaff(){
+
+        Scanner s = new Scanner(System.in);
 
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
@@ -88,8 +89,8 @@ public class DataIO {
         System.out.println("Please enter the staff members second:");
         String lastName = s.nextLine();
 
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
             Staff S = new Staff();
@@ -112,7 +113,9 @@ public class DataIO {
         }
     }
 
-    public void createStudent(){
+    public static void createStudent(){
+
+        Scanner s = new Scanner(System.in);
 
         String temp = "temp";
         System.out.println("Please enter the students ID:");
@@ -123,8 +126,8 @@ public class DataIO {
         String lastName = s.nextLine();
 
 
+        Session session = HibernateUtil.getSessionFactory().openSession();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
             Students S = new Students();
@@ -148,5 +151,17 @@ public class DataIO {
     }
 
     public static void main(String[] args) {
+        createModule();
     }
+
+
+
+
+
+
+
 }
+
+
+
+

@@ -29,13 +29,13 @@ public class Timetable {
         System.out.println("4)A Room");
         String choice = s.nextLine();
 
-        if(choice == "1"){
+        if(choice.equals("1")){
             query = studentTimetable();
-        } else if(choice == "2") {
+        } else if(choice.equals("2")) {
             query = staffTimetable();
-        } else if(choice == "3"){
+        } else if(choice.equals("3")){
             query = moduleTimetable();
-        } else if(choice == "4") {
+        } else if(choice.equals("4")) {
             query = roomTimetable();
         } else{
             System.out.println("Invalid Choice");
@@ -52,7 +52,7 @@ public class Timetable {
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter the student ID: ");
         String studentID = input.nextLine();
-        Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Student s JOIN Teach t ON s.userID=t.userID JOIN Module m ON t.moduleID=m.moduleID JOIN Booking b ON m.moduleID=b.moduleID Where s.userID =" + studentID);
+        Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Students s JOIN Teach t ON s.userID=t.userID JOIN Module m ON t.moduleID=m.moduleID JOIN Booking b ON m.moduleID=b.moduleID Where s.userID =" + studentID);
         return query;
     }
 
