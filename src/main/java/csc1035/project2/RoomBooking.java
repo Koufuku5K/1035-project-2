@@ -10,6 +10,13 @@ import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * RoomBooking provides a simple interface to perform operations around rooms and bookings.
+ * @author William Moses
+ * @author Alfie Fields
+ * @author Joseph Burley
+ * @author Kyle Anderson
+ */
 public class RoomBooking {
     public static Scanner s = new Scanner(System.in);
     public static Session session = HibernateUtil.getSessionFactory().openSession();
@@ -18,6 +25,9 @@ public class RoomBooking {
         menu();
     }
 
+    /**
+     * Provides user with a simple menu.
+     */
     public static void menu() {
         boolean flag = true;
 
@@ -48,6 +58,10 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * Gets user input to make a booking, puts rooms through filters to find those available.
+     * If a room is available then user can book one, the booking is saved to the database.
+     */
     public static void booking(){
         System.out.println("Please enter the User ID of who the booking is for:");
         String userID = s.nextLine();
@@ -62,6 +76,7 @@ public class RoomBooking {
 
         System.out.println("Please enter the date (yyyy-MM-dd):");
         String tempDate = s.nextLine();
+        // Gets users String input and turns it into a Calendar object
         Calendar date = Calendar.getInstance();
         SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -72,6 +87,7 @@ public class RoomBooking {
 
         System.out.println("Please enter the time (HH:mm):");
         String tempTime = s.nextLine();
+        // Gets users String input and turns it into a Calendar object
         Calendar startTime = Calendar.getInstance();
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
         try {
@@ -97,9 +113,11 @@ public class RoomBooking {
         System.out.println("Please enter the booking type:");
         String bookingType = s.nextLine();
 
+        // Get a list of all the rooms and all the bookings stored in the database
         List<Room> availableRooms = new ArrayList<>(getRooms());
         List<Booking> allBookings = new ArrayList<>(getBookings());
 
+        // Put lists through filters finding only the ones that fit the criteria given
         availableRooms = typeFilter(availableRooms, roomType);
         availableRooms = sizeFilter(availableRooms, numPeople, isSociallyDistant);
         allBookings = dateFilter(allBookings, date);
@@ -115,7 +133,9 @@ public class RoomBooking {
                 session = HibernateUtil.getSessionFactory().openSession();
                 session.beginTransaction();
 
+                // Create a new booking and assign all its variables
                 Booking b = new Booking();
+                // For foreign keys have to fetch the actual object instead of a string ID
                 b.setUserID(getUser(userID));
                 b.setRoomNumber(getRoom(room));
                 b.setModuleID(getModule(moduleID));
@@ -138,14 +158,16 @@ public class RoomBooking {
     }
 
     /**
-     * This is a method that prints out all of the rooms that are listed in the room
-     * table.
+     * This is a method that gets all rooms and puts them in a list.
+     * @return list of all rooms in the database.
      */
     public static List<Room> getRooms() {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
+        // Create query to read entire table
         Query roomList = session.createQuery("FROM Room");
+        // Create a list with all read records
         List<Room> rooms = (List<Room>) roomList.list();
         session.getTransaction().commit();
         session.close();
@@ -153,11 +175,17 @@ public class RoomBooking {
         return rooms;
     }
 
+    /**
+     * This is a method that gets all bookings and puts them in a list.
+     * @return list of all bookings in the database.
+     */
     public static List<Booking> getBookings() {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
+        // Create query to read entire table
         Query bookingList = session.createQuery("FROM Booking");
+        // Create a list with all read records
         List<Booking> bookings = (List<Booking>) bookingList.list();
         session.getTransaction().commit();
         session.close();
@@ -165,7 +193,10 @@ public class RoomBooking {
         return bookings;
     }
 
-
+    /**
+     * This is a method for outputting a given list of rooms.
+     * @param rooms list of rooms to be output.
+     */
     public static void listRooms(List<Room> rooms) {
         for (Room r : rooms)
             System.out.println(r);
@@ -176,8 +207,10 @@ public class RoomBooking {
      * booking ID of the booking that they want to cancel.
      */
     public static void cancel() {
+        // Get a list of all the bookings
         List<Booking> bookings = getBookings();
 
+        // Loop through list outputting records in a useful way
         for (Booking b : bookings) {
             System.out.println("Booking ID: " + b.getBookingID());
             System.out.println("User ID: " + b.getUserID());
@@ -185,6 +218,7 @@ public class RoomBooking {
             System.out.println("\n");
         }
 
+        // User inputs the ID of the booking they wish to cancel
         System.out.println("Enter the booking ID that you want to cancel: ");
         int userChoice = Integer.parseInt(s.nextLine());
 
@@ -192,6 +226,7 @@ public class RoomBooking {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
 
+            // Get relevant booking and delete the record
             Booking booking = session.get(Booking.class, userChoice);
             session.delete(booking);
             session.getTransaction().commit();
@@ -203,6 +238,12 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * Takes a list of rooms and removes any not of the correct type.
+     * @param rooms list of room objects.
+     * @param type the type of room the user is looking for.
+     * @return list of rooms that have the correct type.
+     */
     public static List<Room> typeFilter(List<Room> rooms, String type){
         List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
@@ -214,6 +255,13 @@ public class RoomBooking {
         return rooms;
     }
 
+    /**
+     * Takes a list of rooms and removes all the ones which are not big enough.
+     * @param rooms list of room objects.
+     * @param groupSize the number of people to use the room.
+     * @param socialDistancing is the booking under social distance conditions.
+     * @return list of rooms that can fit the number of people.
+     */
     public static List<Room> sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
         List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
@@ -231,6 +279,12 @@ public class RoomBooking {
         return rooms;
     }
 
+    /**
+     * Takes a list of bookings and removes all with a date other than the one we are booking for.
+     * @param bookings lit of booking objects.
+     * @param date the date the user wants to book for.
+     * @return list of bookings all on the desired date.
+     */
     public static List<Booking> dateFilter(List<Booking> bookings, Calendar date) {
         List<Booking> toRemove = new ArrayList<>();
         for (Booking b: bookings) {
@@ -242,20 +296,36 @@ public class RoomBooking {
         return bookings;
     }
 
+    /**
+     * Looks at all the bookings and checks if a room is booked all ready for when the user wants.
+     * @param rooms list of room objects.
+     * @param bookings list of booking objects.
+     * @param ourStartTime the start time of the users booking.
+     * @param duration how long the users booking is going to last.
+     * @param id the ID of the person the booking is for.
+     * @return list of rooms that are available at that time.
+     */
     public static List<Room> timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
                                   int duration, String id) {
         List<Room> toRemove = new ArrayList<>();
+        // Work out when the users booking will end
         Calendar ourEndTime = Calendar.getInstance();
         ourEndTime.setTime(ourStartTime.getTime());
         ourEndTime.add(Calendar.HOUR_OF_DAY, duration);
 
+        // Loop through all bookings that were on the correct date
         for (Booking b: bookings) {
+            // Get the bookings start and end time
             Calendar startTime = b.getStartTime();
             Calendar endTime = Calendar.getInstance();
             endTime.setTime(startTime.getTime());
             endTime.add(Calendar.HOUR_OF_DAY, duration);
+            // Check if users booking will overlap with an existing one
             if ((endTime.after(ourEndTime) || endTime.equals(ourEndTime)) &&
                     (startTime.before(ourEndTime) || startTime.equals(ourEndTime))) {
+                // If there is overlap, check if the booking has the same userID
+                // If it is the same then the booking can't be made as that person
+                // is already booked for another room.
                 if ((b.getUserID().getuserID()).equals(id)) {
                     toRemove.addAll(getRooms());
                     break;
@@ -267,6 +337,9 @@ public class RoomBooking {
         return rooms;
     }
 
+    /**
+     * Takes a room and a field, and updates it with given data.
+     */
     public static void updateRoom() {
         String room = chooseRoom(getRooms());
         String field = chooseField();
@@ -292,11 +365,17 @@ public class RoomBooking {
         }
     }
 
+    /**
+     * Choose a room from a given list.
+     * @param rooms list o room objects to choose from.
+     * @return the primary key of the chosen room.
+     */
     public static String chooseRoom(List<Room> rooms) {
         String roomNumber;
 
         System.out.println("Please choose a Room");
         listRooms(rooms);
+        // Loops until user enters the id of a room in the list
         do {
             System.out.println("Please enter the ID of the room you would like:");
             roomNumber = s.nextLine();
@@ -304,6 +383,10 @@ public class RoomBooking {
         return roomNumber;
     }
 
+    /**
+     * The user has to choose the field they wish to update.
+     * @return the field the user has chosen.
+     */
     public static String chooseField() {
         String field = null;
         System.out.println("Please choose a field to update");
@@ -321,6 +404,12 @@ public class RoomBooking {
         return field;
     }
 
+    /**
+     * Checks a given ID is in a list of rooms.
+     * @param roomNumber ID to check exists.
+     * @param rooms list of rooms to check against.
+     * @return boolean value of if the ID exists in the given list.
+     */
     public static boolean validID(String roomNumber, List<Room> rooms) {
         for (Room r: rooms) {
             if (r.getRoomNumber().equals(roomNumber)) {
@@ -330,6 +419,11 @@ public class RoomBooking {
         return true;
     }
 
+    /**
+     * Get a user object based on a given ID.
+     * @param ID ID of the user you are looking for.
+     * @return the user object you were looking for.
+     */
     public static User getUser(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
         User user = session.get(User.class, ID);
@@ -337,6 +431,11 @@ public class RoomBooking {
         return user;
     }
 
+    /**
+     * Get a module object based on a given ID.
+     * @param ID ID of the module you are looking for.
+     * @return the module object you were looking for.
+     */
     public static Module getModule(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
         Module module = session.get(Module.class, ID);
@@ -344,6 +443,11 @@ public class RoomBooking {
         return module;
     }
 
+    /**
+     * Get a room object based on a given ID.
+     * @param ID ID of the room you are looking for.
+     * @return the room object you were looking for.
+     */
     public static Room getRoom(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
         Room room = session.get(Room.class, ID);

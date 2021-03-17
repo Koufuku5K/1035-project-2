@@ -6,11 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * This class represents the tables for bookings. It has methods relating to
+ * This class represents the table for bookings. It has methods relating to
  * bookings.
- *
- * @author everyone
- *
+ * @author Kyle Anderson
+ * @author William Moses
+ * @author Joseph Burly
+ * @author Alfie Fields
  */
 @Entity(name = "Booking")
 public class Booking {
@@ -51,18 +52,16 @@ public class Booking {
     private int numPeople;
 
     /**
-     *
      * This is the constructor method that compiles the parameter values with the
      * field variables.
-     *
-     * @param userID this represents the user ID from the user table.
-     * @param roomNumber this represents the room number from the room table.
-     * @param moduleID this represents the module ID from the module table.
+     * @param userID this represents the user who booked the room.
+     * @param roomNumber this represents the room used in the booking.
+     * @param moduleID this represents the module taught during the booking.
      * @param startTime this represents the start time for a room.
-     * @param duration this represents the duration when the room will be used.
-     * @param date this represents the date the room will be used.
-     * @param isSociallyDistant this represents whether the room is socially distant.
-     * @param bookingType this represents the type of booking.
+     * @param duration this represents how long the room is booked for (in number of hours).
+     * @param date this represents the date when the room will be used.
+     * @param isSociallyDistant this represents whether the room is used socially distant.
+     * @param bookingType this represents the type of booking (Lecture, Practical, Other).
      * @param numPeople this represents the number of people in the room.
      */
     public Booking(User userID, Room roomNumber, Module moduleID, Calendar startTime, int duration,
@@ -78,6 +77,9 @@ public class Booking {
         this.numPeople = numPeople;
     }
 
+    /**
+     *No variable constructor so a booking can be instantiated without variables.
+     */
     public Booking(){
     }
 
@@ -157,12 +159,18 @@ public class Booking {
         this.numPeople = numPeople;
     }
 
+    /**
+     * This returns a human readable version of a booking.
+     * @return formatted booking object.
+     */
     @Override
     public String toString() {
+        // Extracts the bit of the date from the Calendar object we want, and format it
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date dateToParse = getDate().getTime();
         String date = dateFormat.format(dateToParse);
 
+        // Extracts the bit of the time from the Calendar object we want, and format it
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         Date timeToParse = getStartTime().getTime();
         String time = timeFormat.format(timeToParse);

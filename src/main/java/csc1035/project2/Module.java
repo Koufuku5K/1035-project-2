@@ -7,9 +7,10 @@ import java.util.Set;
 
 /**
  * This class represents a table for modules. It has methods relating to modules.
- *
- * @author everyone
- *
+ * @author Kyle Anderson
+ * @author William Moses
+ * @author Joseph Burley
+ * @author Alfie Fields
  */
 @Entity(name = "Module")
 public class Module{
@@ -52,10 +53,8 @@ public class Module{
     private Set<Students> students = new HashSet<>();
 
     /**
-     *
      * This is the constructor method that compiles the parameter values with the
      * field variables.
-     *
      * @param moduleID this represents the ID of the module.
      * @param moduleName this represents the name of the module.
      * @param credits this represents the credits awarded for the module.
@@ -64,8 +63,8 @@ public class Module{
      * @param lectureLength this represents the length of lectures.
      * @param numPracticals this represents the number of practicals for a module.
      * @param practicalLength this represents the length of practicals.
-     * @param numEnrolled ------------------------------------------------------
-     * @param bookings ---------------------------------------------------------
+     * @param numEnrolled this represents the number of students who take a module.
+     * @param bookings this is a List of all the bookings a module is associated with.
      */
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
                   int numPracticals, double practicalLength, int numEnrolled, List<Booking> bookings) {
