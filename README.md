@@ -4,7 +4,8 @@ CSC1035 Project 2 (Team Project)
 Circumstances
 -------------
 
-Early in the project one of our teammates left. 
+Halfway through the project one of our teammates left.
+As a result the research he had done into JUnit for testing was never utilised.
 
 Work done by each team member:
 
