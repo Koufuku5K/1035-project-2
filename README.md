@@ -9,17 +9,28 @@ Early in the project one of our teammates left.
 Work done by each team member:
 
 Alfie Fields - Database design, hibernate relationships, RoomBooking system
+
 William Moses - 
-Kyle Anderson - 
+
+Kyle Anderson - Created Initial classes, methods to add data to table, timetable system
+
 Joseph Burley - 
 
 Systems
 -------
 
-The project has two systems RoomBooking and Timetable.
+The project has three systems DataIO, RoomBooking and Timetable.
 
 Each system has its own psvm to run separately, they have a very basic interface
 for navigation to run their methods.
+
+DataIO System
+----------------
+Has a menu for user to enable choice between
+    -Adding new Room
+    -Adding new Module
+    -Adding new Staff member
+    -Adding new Student
 
 Room Booking System
 -------------------
