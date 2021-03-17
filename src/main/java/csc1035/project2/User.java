@@ -1,7 +1,16 @@
 package csc1035.project2;
 import javax.persistence.*;
+<<<<<<< HEAD
 import java.util.List;
 
+/**
+ * This class represents a table for users. It has methods relating to the users and
+ * is the parent of Staff and Students class.
+ * @author Kyle Anderson
+ * @author William Moses
+ * @author Joseph Burley
+ * @author Alfie Fields
+ */
 @Entity(name = "User")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -19,12 +28,23 @@ public class User {
     @OneToMany(mappedBy = "userID")
     private List<Booking> user;
 
+    /**
+     * This is the constructor methods that compiles the parameter values with the
+     * field values.
+     * @param id this represents the ID of the user.
+     * @param firstName this represents the first name of the user.
+     * @param lastName this represents the last name of the user.
+     * @param user list of bookings a user as made.
+     */
     public User(String id, String firstName, String lastName, List<Booking> user) {
         this.userID = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    /**
+     * No parameter constructor for initialising and empty object.
+     */
     public User() {
     }
 
@@ -34,6 +54,33 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+=======
+
+@Entity
+public class User {
+    @Id
+    private String userID;
+    @Column
+    private String firstName;
+    @Column
+    private String lastName;
+
+    public User(String id, String firstName, String lastName) {
+        this.userID = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+<<<<<<<< HEAD:src/main/java/csc1035/project2/User.java
+    public User(){}
+========
+>>>>>>>> Rename UniversityPerson to User:src/main/java/csc1035/project2/UniversityPerson.java
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String id) {
+        this.userID = id;
     }
 
     public String getFirstName() {
@@ -51,6 +98,7 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+<<<<<<< HEAD
 
     public List<Booking> getUser() {
         return user;
@@ -59,4 +107,6 @@ public class User {
     public void setUser(List<Booking> user) {
         this.user = user;
     }
+=======
+>>>>>>> Rename UniversityPerson to User
 }
