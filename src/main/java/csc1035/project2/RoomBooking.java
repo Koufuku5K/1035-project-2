@@ -3,10 +3,9 @@ package csc1035.project2;
 import org.hibernate.Session;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Scanner;
@@ -19,7 +18,7 @@ public class RoomBooking {
         menu();
     }
 
-    private static void menu() throws ParseException {
+    public static void menu() {
         boolean flag = true;
 
         while (flag) {
@@ -30,31 +29,33 @@ public class RoomBooking {
                                "| 2 - Cancel Booking          |\n" +
                                "| 3 - View Room Timetable     |\n" +
                                "| 4 - Update A Room           |\n" +
-                               "| 5 - Exit                    |\n" +
+                               "| 5 - Get Booking Confirmation|\n" +
+                               "| 6 - Exit                    |\n" +
                                "-------------------------------");
-            System.out.println("Enter option (0-5):");
+            System.out.println("Enter option (0-6):");
             String option = s.nextLine();
 
             switch (option) {
-                case "0" -> listRoom();
+                case "0" -> listRooms(getRooms());
                 case "1" -> booking();
-                case "2" -> ;
-                case "3" -> ;
+                case "2" -> cancel();
+                case "3" -> timetable();
                 case "4" -> updateRoom();
-                case "5" -> flag = false;
+                case "5" -> confirmation();
+                case "6" -> flag = false;
                 default -> System.out.println("Please enter a menu option");
             }
         }
     }
 
-    public static void booking() throws ParseException {
+    public static void booking(){
         System.out.println("Please enter the User ID of who the booking is for:");
         String userID = s.nextLine();
 
         System.out.println("Please choose a room type\n" +
                 " PC Cluster \n" +
                 " Lecture Hall \n" +
-                " Seminar Room" +
+                " Seminar Room \n" +
                 " Meeting Room");
         System.out.println("Please enter the room type:");
         String roomType = s.nextLine();
@@ -69,7 +70,7 @@ public class RoomBooking {
             e.printStackTrace();
         }
 
-        System.out.println("Please enter the time (HH:mm");
+        System.out.println("Please enter the time (HH:mm):");
         String tempTime = s.nextLine();
         Calendar startTime = Calendar.getInstance();
         SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm");
@@ -92,13 +93,12 @@ public class RoomBooking {
 
         System.out.println("Please enter the module ID, or leave blank");
         String moduleID = s.nextLine();
-        Module module = getModule(moduleID);
 
         System.out.println("Please enter the booking type:");
         String bookingType = s.nextLine();
 
-        List<Room> availableRooms = getRooms();
-        List<Booking> allBookings = getBookings();
+        List<Room> availableRooms = new ArrayList<>(getRooms());
+        List<Booking> allBookings = new ArrayList<>(getBookings());
 
         availableRooms = typeFilter(availableRooms, roomType);
         availableRooms = sizeFilter(availableRooms, numPeople, isSociallyDistant);
@@ -108,40 +108,41 @@ public class RoomBooking {
         if (availableRooms.isEmpty()) {
             System.out.println("There are no available rooms");
         } else {
-            listRooms();
-        }
-        String room = chooseRoom(availableRooms);
+            listRooms(availableRooms);
+            String room = chooseRoom(availableRooms);
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
+            try {
+                session = HibernateUtil.getSessionFactory().openSession();
+                session.beginTransaction();
 
-            Booking b = new Booking();
-            b.setUserID(getUser(userID));
-            b.setRoomNumber(getRoom(room));
-            b.setModuleID(getModule(moduleID));
-            b.setStartTime(startTime);
-            b.setDuration(duration);
-            b.setDate(date);
-            b.setIsSociallyDistant(isSociallyDistant);
-            b.setBookingType(bookingType);
-            b.setNumPeople(numPeople);
+                Booking b = new Booking();
+                b.setUserID(getUser(userID));
+                b.setRoomNumber(getRoom(room));
+                b.setModuleID(getModule(moduleID));
+                b.setStartTime(startTime);
+                b.setDuration(duration);
+                b.setDate(date);
+                b.setIsSociallyDistant(isSociallyDistant);
+                b.setBookingType(bookingType);
+                b.setNumPeople(numPeople);
 
-            session.save(b);
-            session.getTransaction().commit();
-        } catch (HibernateException e) {
-            if (session != null) {
-                session.getTransaction().rollback();
+                session.save(b);
+                session.getTransaction().commit();
+            } catch (HibernateException e) {
+                if (session != null) session.getTransaction().rollback();
+                e.printStackTrace();
+            } finally {
+                session.close();
             }
-            e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
 
-    public static void roomList() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+    /**
+     * This is a method that prints out all of the rooms that are listed in the room
+     * table.
+     */
+    public static List<Room> getRooms() {
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query roomList = session.createQuery("FROM Room");
@@ -149,19 +150,33 @@ public class RoomBooking {
         session.getTransaction().commit();
         session.close();
 
-        for (Room r : rooms)
-            System.out.println(r.getRoomNumber());
+        return rooms;
     }
 
-    public static void cancel() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+    public static List<Booking> getBookings() {
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         Query bookingList = session.createQuery("FROM Booking");
         List<Booking> bookings = (List<Booking>) bookingList.list();
         session.getTransaction().commit();
         session.close();
+
+        return bookings;
+    }
+
+
+    public static void listRooms(List<Room> rooms) {
+        for (Room r : rooms)
+            System.out.println(r);
+    }
+
+    /**
+     * This is a method that allows the user to cancel their booking by entering the
+     * booking ID of the booking that they want to cancel.
+     */
+    public static void cancel() {
+        List<Booking> bookings = getBookings();
 
         for (Booking b : bookings) {
             System.out.println("Booking ID: " + b.getBookingID());
@@ -170,18 +185,16 @@ public class RoomBooking {
             System.out.println("\n");
         }
 
-        Scanner s = new Scanner(System.in);
-
         System.out.println("Enter the booking ID that you want to cancel: ");
-        int userChoice = s.nextInt();
+        int userChoice = Integer.parseInt(s.nextLine());
 
         try {
-            Session session1 = sessionFactory.openSession();
-            session1.beginTransaction();
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
 
-            Booking booking = session1.get(Booking.class, userChoice);
-            session1.delete(booking);
-            session1.getTransaction().commit();
+            Booking booking = session.get(Booking.class, userChoice);
+            session.delete(booking);
+            session.getTransaction().commit();
         } catch (HibernateException e) {
             if(session!=null) session.getTransaction().rollback();
             e.printStackTrace();
@@ -191,41 +204,47 @@ public class RoomBooking {
     }
 
     public static List<Room> typeFilter(List<Room> rooms, String type){
+        List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
             if (!r.getRoomType().equals(type)) {
-                rooms.remove(r);
+                toRemove.add(r);
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
     public static List<Room> sizeFilter(List<Room> rooms, int groupSize, boolean socialDistancing) {
+        List<Room> toRemove = new ArrayList<>();
         for (Room r: rooms) {
             if (socialDistancing) {
                 if (r.getSocialDistanceCapacity() < groupSize) {
-                    rooms.remove(r);
+                    toRemove.add(r);
                 }
             } else {
                 if (r.getMaxCapacity() < groupSize) {
-                    rooms.remove(r);
+                    toRemove.add(r);
                 }
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
     public static List<Booking> dateFilter(List<Booking> bookings, Calendar date) {
+        List<Booking> toRemove = new ArrayList<>();
         for (Booking b: bookings) {
             if (!b.getDate().equals(date)) {
-                bookings.remove(b);
+                toRemove.add(b);
             }
         }
+        bookings.removeAll(toRemove);
         return bookings;
     }
 
     public static List<Room> timeFilter(List<Room> rooms, List<Booking> bookings, Calendar ourStartTime,
                                   int duration, String id) {
-        boolean sameUser = false;
+        List<Room> toRemove = new ArrayList<>();
         Calendar ourEndTime = Calendar.getInstance();
         ourEndTime.setTime(ourStartTime.getTime());
         ourEndTime.add(Calendar.HOUR_OF_DAY, duration);
@@ -238,17 +257,18 @@ public class RoomBooking {
             if ((endTime.after(ourEndTime) || endTime.equals(ourEndTime)) &&
                     (startTime.before(ourEndTime) || startTime.equals(ourEndTime))) {
                 if ((b.getUserID().getuserID()).equals(id)) {
-                    rooms.clear();
+                    toRemove.addAll(getRooms());
                     break;
                 }
-                rooms.remove(b.getRoomNumber());
+                toRemove.add(b.getRoomNumber());
             }
         }
+        rooms.removeAll(toRemove);
         return rooms;
     }
 
     public static void updateRoom() {
-        String room = chooseRoom(getRoom());
+        String room = chooseRoom(getRooms());
         String field = chooseField();
         System.out.println("Please enter the new data:");
         String newData = s.nextLine();
@@ -276,7 +296,7 @@ public class RoomBooking {
         String roomNumber;
 
         System.out.println("Please choose a Room");
-        listRoom(rooms);
+        listRooms(rooms);
         do {
             System.out.println("Please enter the ID of the room you would like:");
             roomNumber = s.nextLine();
@@ -293,15 +313,9 @@ public class RoomBooking {
         System.out.println("Enter option (0-2):");
         String option = s.nextLine();
         switch (option) {
-            case "0" -> {
-                field = "roomType";
-            }
-            case "1" -> {
-                field = "maxCapacity";
-            }
-            case "2" -> {
-                field = "socialDistantCapacity";
-            }
+            case "0" -> field = "roomType";
+            case "1" -> field = "maxCapacity";
+            case "2" -> field = "socialDistantCapacity";
             default -> System.out.println("Please enter a menu option");
         }
         return field;
@@ -318,62 +332,72 @@ public class RoomBooking {
 
     public static User getUser(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        User user = (User) session.get(User.class, ID);
+        User user = session.get(User.class, ID);
         session.close();
         return user;
     }
 
     public static Module getModule(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Module module = (Module) session.get(Module.class, ID);
+        Module module = session.get(Module.class, ID);
         session.close();
         return module;
     }
 
     public static Room getRoom(String ID) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Room room = (Room) session.get(Room.class, ID);
+        Room room = session.get(Room.class, ID);
         session.close();
         return room;
     }
-}
 
+
+    /**
+     * This is a method that returns the booking confirmation of the booking that the
+     * user made. It prints out some of the important information on the booking
+     * confirmation.
+     */
     public static void confirmation() {
-        Scanner s = new Scanner(System.in);
         System.out.println("Enter the room number to get the booking confirmation: ");
-        double roomNumber = s.nextDouble();
+        String roomNumber = s.nextLine();
+        Room room = getRoom(roomNumber);
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
-        String hql = "SELECT B.bookingID, B.roomNumber, B.userID, B.date FROM Booking B, Room R WHERE B.roomNumber = :roomNumber";
+        String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber";
         Query confirmation = session.createQuery(hql);
-        confirmation.setParameter("roomNumber", roomNumber);
+        confirmation.setParameter("roomNumber", room);
         List<Booking> booking = (List<Booking>)confirmation.list();
         session.getTransaction().commit();
         session.close();
 
         for (Booking b : booking) {
+            System.out.println("\n");
             System.out.println("Your Booking Confirmation:\n" + "Booking ID: " + b.getBookingID());
-            System.out.println("Booking details:\n" + "User ID: " + b.getUserID());
-            System.out.println("Room Number: " + b.getRoomNumber());
-            System.out.println("Date: " + b.getDate());
+            System.out.println("Booking details:\n" + "User ID: " + b.getUserID().getuserID());
+            System.out.println("Room Number: " + b.getRoomNumber().getRoomNumber());
+            System.out.println("Date: " + b.getDate().get(Calendar.DAY_OF_MONTH) + "/"
+                                        + b.getDate().get(Calendar.MONTH) + "/"
+                                        + b.getDate().get(Calendar.YEAR));
+            System.out.println("\n");
         }
     }
 
+    /**
+     * This method produces the timetable for a room.
+     */
     public static void timetable() {
-        Scanner s = new Scanner(System.in);
         System.out.println("Enter room number: ");
-        double roomNumber = s.nextDouble();
+        String roomNumber = s.nextLine();
+        Room room = getRoom(roomNumber);
 
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
+        session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
 
         String hql = "FROM Booking B WHERE B.roomNumber = :roomNumber GROUP BY B.date";
         Query timetable = session.createQuery(hql);
-        timetable.setParameter("roomNumber", roomNumber);
+        timetable.setParameter("roomNumber", room);
         List<Booking> bookings = (List<Booking>)timetable.list();
         session.getTransaction().commit();
         session.close();
@@ -382,5 +406,4 @@ public class RoomBooking {
             System.out.println(b);
         }
     }
-
 }

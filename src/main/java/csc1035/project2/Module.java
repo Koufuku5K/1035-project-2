@@ -5,6 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class represents a table for modules. It has methods relating to modules.
+ *
+ * @author everyone
+ *
+ */
 @Entity(name = "Module")
 public class Module{
 
@@ -45,6 +51,22 @@ public class Module{
     @ManyToMany(mappedBy = "modules")
     private Set<Students> students = new HashSet<>();
 
+    /**
+     *
+     * This is the constructor method that compiles the parameter values with the
+     * field variables.
+     *
+     * @param moduleID this represents the ID of the module.
+     * @param moduleName this represents the name of the module.
+     * @param credits this represents the credits awarded for the module.
+     * @param weeks this represents the amount of weeks going for the module.
+     * @param numLectures this represents the number of lectures taking place.
+     * @param lectureLength this represents the length of lectures.
+     * @param numPracticals this represents the number of practicals for a module.
+     * @param practicalLength this represents the length of practicals.
+     * @param numEnrolled ------------------------------------------------------
+     * @param bookings ---------------------------------------------------------
+     */
     public Module(String moduleID, String moduleName, int credits, int weeks, int numLectures, double lectureLength,
                   int numPracticals, double practicalLength, int numEnrolled, List<Booking> bookings) {
         this.moduleID = moduleID;

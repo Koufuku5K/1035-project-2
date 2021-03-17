@@ -3,6 +3,13 @@ import javax.persistence.*;
 <<<<<<< HEAD
 import java.util.List;
 
+/**
+ * This class represents a table for users. It has methods relating to the users and
+ * is the parent of Staff and Students class.
+ *
+ * @author everyone
+ *
+ */
 @Entity(name = "User")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
@@ -20,6 +27,16 @@ public class User {
     @OneToMany(mappedBy = "userID")
     private List<Booking> user;
 
+    /**
+     *
+     * This is the constructor methods that compiles the parameter values with the
+     * field values.
+     *
+     * @param id this represents the ID of the user.
+     * @param firstName this represents the first name of the user.
+     * @param lastName this represents the last name of the user.
+     * @param user -----------------------------------------------
+     */
     public User(String id, String firstName, String lastName, List<Booking> user) {
         this.userID = id;
         this.firstName = firstName;
