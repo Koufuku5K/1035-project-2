@@ -41,7 +41,7 @@ public class Timetable {
             System.out.println("Invalid Choice");
             selectQuery();
             }
-
+        System.out.println(query);
         return query;
 
     }
@@ -53,6 +53,7 @@ public class Timetable {
         System.out.println("Please enter the student ID: ");
         String studentID = input.nextLine();
         Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Students s JOIN Teach t ON s.userID=t.userID JOIN Module m ON t.moduleID=m.moduleID JOIN Booking b ON m.moduleID=b.moduleID Where s.userID =" + studentID);
+        System.out.println(query);
         return query;
     }
 
@@ -63,6 +64,7 @@ public class Timetable {
         System.out.println("Please enter the staff ID: ");
         String staffID = input.nextLine();
         Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Staff s JOIN Teach t ON s.userID=t.userID JOIN Module m ON t.moduleID=m.moduleID JOIN Booking b ON m.moduleID=b.moduleID WHERE s.userID =" + staffID);
+        System.out.println(query);
         return query;
     }
 
@@ -73,6 +75,7 @@ public class Timetable {
         System.out.println("Please enter the module ID: ");
         String moduleID = input.nextLine();
         Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Module m JOIN Booking b ON m.moduleID = b.moduleID WHERE m.moduleID =" + moduleID);
+        System.out.println(query);
         return query;
     }
 
@@ -83,6 +86,7 @@ public class Timetable {
         System.out.println("Please enter the room number: ");
         String roomNumber = input.nextLine();
         Query query = s.createQuery("SELECT b.date, b.startTime, b.roomNumber, m.moduleID, m.moduleName, b.duration FROM Module m JOIN Booking b ON m.moduleID=b.moduleID WHERE b.roomNumber = Variable" + roomNumber);
+        System.out.println(query);
         return query;
     }
 
