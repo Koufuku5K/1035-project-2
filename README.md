@@ -11,7 +11,7 @@ Work done by each team member:
 
 Alfie Fields - Database design, hibernate relationships, RoomBooking system
 
-William Moses - Database creation, hibernate annotations, RoomBooking system
+William Moses - Database table creation, hibernate annotations, RoomBooking system
 
 Kyle Anderson - Created Initial classes, methods to add data to table, timetable system
 
