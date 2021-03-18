@@ -15,7 +15,7 @@ William Moses - Database creation, hibernate annotations, RoomBooking system
 
 Kyle Anderson - Created Initial classes, methods to add data to table, timetable system
 
-Joseph Burley - 
+Joseph Burley - Database design, timetable system, HQL query design
 
 Systems
 -------
