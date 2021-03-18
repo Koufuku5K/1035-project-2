@@ -1,12 +1,49 @@
 CSC1035 Project 2 (Team Project)
 ================================
 
-You need to fork this project into your team repo. 
+Circumstances
+-------------
 
-Details on how to connect with your database can be found on your Canvas group.
+Halfway through the project one of our teammates left.
+As a result the research he had done into JUnit for testing was never utilised.
 
-Sample data for the database can be found in `./src/main/resources`. Most of 
-this data was generated using [Mockaroo](https://www.mockaroo.com/). Feel free
-to add more to the csv. This is not an exhaustive list, but you must include
-these columns.
+Work done by each team member:
+
+Alfie Fields - Database design, hibernate relationships, RoomBooking system
+
+William Moses - Database creation, hibernate annotations, RoomBooking system
+
+Kyle Anderson - Created Initial classes, methods to add data to table, timetable system
+
+Joseph Burley - Database design, timetable system, HQL query design
+
+Systems
+-------
+
+The project has three systems DataIO, RoomBooking and Timetable.
+
+Each system has its own psvm to run separately, they have a very basic interface
+for navigation to run their methods.
+
+DataIO System
+----------------
+Has a menu for user to enable choice between
+    -Adding new Room
+    -Adding new Module
+    -Adding new Staff member
+    -Adding new Student
+
+Room Booking System
+-------------------
+Has options to:
+    - Output a list of all the rooms stored in the database
+    - Input data for a booking, to find available rooms then book one
+    - Cancel a booking by giving its ID
+    - View a room timetable returns a list of all the bookings associated with a room
+    - Update a certain field in a room
+    - Get a confirmation of booked room
+    - Exit and close the system
+
+TimeTable System
+----------------
 

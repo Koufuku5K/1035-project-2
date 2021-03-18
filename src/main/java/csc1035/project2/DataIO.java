@@ -74,8 +74,31 @@ public class DataIO {
         s.nextLine();
         int numEnrolled = s.nextInt();
 
-        Module m = new Module(ID,name,weeks,credits,numLectures,lectureLength,numPracticals,practicalLength,numEnrolled);
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
 
+            session.beginTransaction();
+
+            Module m = new Module();
+            m.setModuleID(ID);
+            m.setModuleName(name);
+            m.setWeeks(weeks);
+            m.setCredits(credits);
+            m.setNumLectures(numLectures);
+            m.setLectureLength(lectureLength);
+            m.setNumPracticals(numPracticals);
+            m.setPracticalLength(practicalLength);
+            m.setNumEnrolled(numEnrolled);
+            session.save(m);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
     }
 
     public static void createStaff(){
@@ -97,7 +120,6 @@ public class DataIO {
             S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setTeaching(temp);
 
             session.save(S);
             session.getTransaction().commit();
@@ -134,7 +156,6 @@ public class DataIO {
             S.setUserID(ID);
             S.setFirstName(firstName);
             S.setLastName(lastName);
-            S.setAttending("temp");
 
             session.save(S);
             session.getTransaction().commit();
@@ -151,7 +172,28 @@ public class DataIO {
     }
 
     public static void main(String[] args) {
-        createModule();
+        Scanner s = new Scanner(System.in);
+        System.out.println("Which table would you like to add data to:");
+        System.out.println("1)Room");
+        System.out.println("2)Module");
+        System.out.println("3)Staff");
+        System.out.println("4)Student");
+        String choice = s.nextLine();
+        if(choice.equals("1")){
+            createRoom();
+        }
+        else if(choice.equals("2")){
+            createModule();
+        }
+        else if(choice.equals("3")){
+            createStaff();
+        }
+        else if(choice.equals("4")){
+            createStudent();
+        }
+        else{
+            System.out.println("invalid choice");
+        }
     }
 
 
