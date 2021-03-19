@@ -27,23 +27,26 @@ for navigation to run their methods.
 
 DataIO System
 ----------------
-Has a menu for user to enable choice between
-    -Adding new Room
-    -Adding new Module
-    -Adding new Staff member
-    -Adding new Student
+Has a menu for user to enable choice between: \
+    -Adding new Room \
+    -Adding new Module \
+    -Adding new Staff member \
+    -Adding new Student 
 
 Room Booking System
 -------------------
-Has options to:
-    - Output a list of all the rooms stored in the database
-    - Input data for a booking, to find available rooms then book one
-    - Cancel a booking by giving its ID
-    - View a room timetable returns a list of all the bookings associated with a room
-    - Update a certain field in a room
-    - Get a confirmation of booked room
+Has options to: \
+    - Output a list of all the rooms stored in the database \
+    - Input data for a booking, to find available rooms then book one \
+    - Cancel a booking by giving its ID \
+    - View a room timetable returns a list of all the bookings associated with a room \
+    - Update a certain field in a room \
+    - Get a confirmation of booked room \
     - Exit and close the system
 
 TimeTable System
 ----------------
-
+Has command line menu to: \
+    -Choose A timetable type they would like to view \
+    -Enter an ID to get the timetable of a specific item from the table
+    -Outputs the query as a timetable
