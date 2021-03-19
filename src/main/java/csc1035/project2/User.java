@@ -78,4 +78,13 @@ public class User {
     public void setUser(List<Booking> user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID='" + userID + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }
