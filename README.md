@@ -32,6 +32,8 @@ Has a menu for user to enable choice between: \
     -Adding new Module \
     -Adding new Staff member \
     -Adding new Student 
+    \
+    
 
 Room Booking System
 -------------------
