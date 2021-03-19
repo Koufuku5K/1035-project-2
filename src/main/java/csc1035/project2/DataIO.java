@@ -1,16 +1,16 @@
 package csc1035.project2;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import java.util.Scanner;
 
 public class DataIO {
 
-    Session session = HibernateUtil.getSessionFactory().openSession();
+    private static final Scanner s = new Scanner(System.in);
 
 
     public static void createRoom(){
 
-        Scanner s = new Scanner(System.in);
         System.out.println("Please enter room number:");
         String room = s.nextLine();
         System.out.println("Please enter room type:");
@@ -46,33 +46,24 @@ public class DataIO {
 
     public static void createModule(){
 
-        Scanner s = new Scanner(System.in);
-
         System.out.println("Please enter the module ID:");
         String ID = s.nextLine();
         System.out.println("Please enter the module name:");
         String name = s.nextLine();
         System.out.println("Please enter the module credits:");
-        s.nextLine();
-        int credits = s.nextInt();
+        int credits = Integer.parseInt(s.nextLine());
         System.out.println("Please enter the weeks the module will last for:");
-        s.nextLine();
-        int weeks = s.nextInt();
+        int weeks = Integer.parseInt(s.nextLine());
         System.out.println("Please enter the number of lectures per week:");
-        s.nextLine();
-        int numLectures = s.nextInt();
+        int numLectures = Integer.parseInt(s.nextLine());
         System.out.println("Please enter the length of lectures:");
-        s.nextLine();
-        double lectureLength = s.nextDouble();
+        double lectureLength = Double.parseDouble(s.nextLine());
         System.out.println("Please enter the number of practicals per week:");
-        s.nextLine();
-        int numPracticals = s.nextInt();
+        int numPracticals = Integer.parseInt(s.nextLine());
         System.out.println("Please enter the length of practicals:");
-        s.nextLine();
-        double practicalLength = s.nextDouble();
+        double practicalLength = Double.parseDouble(s.nextLine());
         System.out.println("Please enter the number of students enrolled on this module");
-        s.nextLine();
-        int numEnrolled = s.nextInt();
+        int numEnrolled = Integer.parseInt(s.nextLine());
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         try {
@@ -102,8 +93,6 @@ public class DataIO {
     }
 
     public static void createStaff(){
-
-        Scanner s = new Scanner(System.in);
 
         System.out.println("Please enter the staff members ID:");
         String ID = s.nextLine();
@@ -136,8 +125,6 @@ public class DataIO {
     }
 
     public static void createStudent(){
-
-        Scanner s = new Scanner(System.in);
 
         String temp = "temp";
         System.out.println("Please enter the students ID:");
@@ -172,27 +159,20 @@ public class DataIO {
     }
 
     public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
+
         System.out.println("Which table would you like to add data to:");
         System.out.println("1)Room");
         System.out.println("2)Module");
         System.out.println("3)Staff");
         System.out.println("4)Student");
+        System.out.println("Please enter a number from 1 to 4:");
         String choice = s.nextLine();
-        if(choice.equals("1")){
-            createRoom();
-        }
-        else if(choice.equals("2")){
-            createModule();
-        }
-        else if(choice.equals("3")){
-            createStaff();
-        }
-        else if(choice.equals("4")){
-            createStudent();
-        }
-        else{
-            System.out.println("invalid choice");
+        switch (choice) {
+            case "1" -> createRoom();
+            case "2" -> createModule();
+            case "3" -> createStaff();
+            case "4" -> createStudent();
+            default -> System.out.println("invalid choice");
         }
     }
 
